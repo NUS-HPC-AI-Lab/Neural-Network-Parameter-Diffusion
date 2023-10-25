@@ -11,7 +11,7 @@ In this work, we demonstrate that diffusion models can also generate high-perfor
 - <sup>1</sup>[National University of Singapore](https://www.nus.edu.sg/), <sup>2</sup>[Meta AI](https://www.meta.com/), and <sup>3</sup>[University of California, Berkeley](https://www.berkeley.edu/)
 ## Acknowledgments
 
-We thank [Kaiming He](https://kaiminghe.github.io/) for his valuable discussions and feedback.
+We thank [Kaiming He](https://kaiminghe.github.io/), [Leon Bottou](https://ai.meta.com/people/leon-bottou/), and [Yann Lecun](https://scholar.google.com/citations?user=WLN3QrAAAAAJ&hl=en) for his valuable discussions and feedback.
 
 ## Abstract
 

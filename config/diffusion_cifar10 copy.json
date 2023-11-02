@@ -1,0 +1,55 @@
+{
+"dataset": {
+    "name": "cifar10",
+    "path": "/cifar10_data/",
+    "resolution": 32
+}
+,
+"model": {
+    "in_channel": 3,
+    "channel": 128,
+    "channel_multiplier": [1, 2, 2, 2],
+    "n_res_blocks": 2,
+    "attn_strides": [16],
+    "mean_type": "eps",
+    "var_type": "fixedlarge",
+    "loss_type": "mse",
+    "dropout": 0.1,
+    "fold": 1,
+    "schedule": {
+        "type": "linear",
+        "beta_start": 1e-4,
+        "beta_end": 2e-2,
+        "n_timestep": 1000
+    },
+    "device": "cuda",
+    "precision": 32
+}
+,
+"training": {
+    "n_iter" : 1000000,
+    "optimizer": {
+        "type": "adam",
+        "lr": 2e-4
+    },
+    "dataloader": {
+        "batch_size": 128,
+        "num_workers": 4,
+        "drop_last": true
+    }
+}
+,
+"validation": {
+    "dataloader": {
+        "batch_size": 100,
+        "num_workers": 4,
+        "drop_last": false
+    }
+},
+"evaluate": {
+    "wandb": false,
+    "log_every": 500,
+    "save_every": 5000,
+    "valid_every": 5000
+}
+}

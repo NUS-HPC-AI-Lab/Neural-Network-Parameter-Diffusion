@@ -8,7 +8,7 @@ This repository contains the code and implementation details for the research pa
 ## Overview
 
 <p align="center">
-<img src="./figs/pipeline_1129_v2.pdf" width=35% height=35%
+<img src="./figs/pipeline.png" width=35% height=35%
 class="center">
 <figcaption>Figure: Models are often compared only by their ImageNet accuracy, without looking at many other important behaviors. In our work, we analyze models with similar ImageNet accuracies and find that they have different properties.</figcaption>
 </p>

@@ -1,4 +1,5 @@
 # Neural Network Diffusion
+![Alt Text](https://github.com/NUS-HPC-AI-Lab/Neural-Network-Diffusion/blob/main/figs/motivation.gif)
 
 ## Overview
 

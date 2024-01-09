@@ -1,8 +1,13 @@
 # Neural Network Diffusion
 ![Motivation of p-diff](figs/motivation_v3.gif)
 
-This repository contains the code and implementation details for the research paper titled "Neural Network Diffusion." The paper explores novel paradigms in deep learning, specifically focusing on the diffusion models for generating high-performing neural network parameters.
+This repository contains the code and implementation details for the research paper titled "Neural Network Diffusion." The paper explores novel paradigms in deep learning, specifically focusing on diffusion models for generating high-performing neural network parameters.
 
+
+## Authors
+
+- [Kai Wang](https://kaiwang960112.github.io/)<sup>1</sup>, [Zhaopan Xu](https://scholar.google.com.hk/citations?user=qNWDwOcAAAAJ&hl=zh-CN)<sup>1</sup>, [Zhuang Liu](https://liuzhuang13.github.io/)<sup>2</sup>, Yukun Zhou, [Zelin Zang](https://scholar.google.com/citations?user=foERjnQAAAAJ&hl=zh-CN)<sup>1</sup>, [Trevor Darrell](https://people.eecs.berkeley.edu/~trevor/)<sup>3</sup>, and [Yang You](https://www.comp.nus.edu.sg/~youy/)<sup>1</sup>
+- <sup>1</sup>[National University of Singapore](https://www.nus.edu.sg/), <sup>2</sup>[Meta AI](https://www.meta.com/), and <sup>3</sup>[University of California, Berkeley](https://www.berkeley.edu/)
 
 
 ## Overview
@@ -17,14 +22,6 @@ class="center">
 > **Abstract:** Diffusion models have achieved remarkable success in image and video generation. In this work, we demonstrate that diffusion models can also generate high-performing neural network parameters. Our approach is simple, utilizing an autoencoder and a standard latent diffusion model. The autoencoder extracts latent representations of the trained network parameters. A diffusion model is then trained to synthesize these latent parameter representations from random noise. It then generates new representations that are passed through the autoencoder's decoder, whose outputs are ready to use as new sets of network parameters. Across various architectures and datasets, our diffusion process consistently generates models of comparable or improved performance over SGD-trained models, with minimal additional cost. Our results encourage more exploration on the versatile use of diffusion models. 
 
 
-## Authors
-
-- [Kai Wang](https://kaiwang960112.github.io/)<sup>1</sup>, [Zhaopan Xu](https://scholar.google.com.hk/citations?user=qNWDwOcAAAAJ&hl=zh-CN)<sup>1</sup>, [Zhuang Liu](https://liuzhuang13.github.io/)<sup>2</sup>, Yukun Zhou, [Zelin Zang](https://scholar.google.com/citations?user=foERjnQAAAAJ&hl=zh-CN)<sup>1</sup>, [Trevor Darrell](https://people.eecs.berkeley.edu/~trevor/)<sup>3</sup>, and [Yang You](https://www.comp.nus.edu.sg/~youy/)<sup>1</sup>
-- <sup>1</sup>[National University of Singapore](https://www.nus.edu.sg/), <sup>2</sup>[Meta AI](https://www.meta.com/), and <sup>3</sup>[University of California, Berkeley](https://www.berkeley.edu/)
-
-## Abstract
-
-[Include a brief summary or abstract of the paper here.]
 
 ## Getting Started
 

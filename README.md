@@ -10,7 +10,7 @@ This repository contains the code and implementation details for the research pa
 <p align="center">
 <img src="./figs/pipeline.png" width=100% height=55.2%
 class="center">
-<figcaption>Figure: Models are often compared only by their ImageNet accuracy, without looking at many other important behaviors. In our work, we analyze models with similar ImageNet accuracies and find that they have different properties.</figcaption>
+<figcaption>Figure: Illustration of the proposed p-diff framework. Our approach consists of two processes, namely parameter autoencoder and generation. Parameter autoencoder aims to extract the latent representations that can generate high-performing model parameters via the decoder. The extracted representations are fed into a standard latent diffusion model (LDM). During the inference, we freeze the parameters of the autoencoder's decoder. The generated parameters are obtained via feeding random noise to the LDM and trained decoder.</figcaption>
 </p>
 
 ## Authors

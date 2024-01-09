@@ -1,0 +1,408 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <meta name="description"
+    content="Towards Lossless Dataset Distillation via Difficulty-Aligned Trajectory Matching.">
+  <meta name="keywords" content="Dataset Distillation, DATM">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Towards Lossless Dataset Distillation via Difficulty-Aligned
+    Trajectory Matching</title>
+
+  <!-- Global site tag (gtag.js) - Google Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-PYVRSFMDRL"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+
+    function gtag() {
+      dataLayer.push(arguments);
+    }
+
+    gtag('js', new Date());
+
+    gtag('config', 'G-PYVRSFMDRL');
+  </script>
+
+  <link href="https://fonts.googleapis.com/css?family=Google+Sans|Noto+Sans|Castoro" rel="stylesheet">
+
+  <link rel="stylesheet" href="./static/css/bulma.min.css">
+  <link rel="stylesheet" href="./static/css/bulma-carousel.min.css">
+  <link rel="stylesheet" href="./static/css/bulma-slider.min.css">
+  <link rel="stylesheet" href="./static/css/fontawesome.all.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css">
+  <link rel="stylesheet" href="./static/css/index.css">
+  <link rel="icon" href="./static/images/logo.png">
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script defer src="./static/js/fontawesome.all.min.js"></script>
+  <script src="./static/js/bulma-carousel.min.js"></script>
+  <script src="./static/js/bulma-slider.min.js"></script>
+  <script src="./static/js/index.js"></script>
+</head>
+
+<body>
+
+
+
+  <section class="hero">
+    <div class="hero-body">
+      <div class="container is-max-desktop">
+        <div class="columns is-centered">
+          <div class="column has-text-centered">
+            <h1 class="title is-1 publication-title">Towards Lossless Dataset Distillation via Difficulty-Aligned
+              Trajectory Matching</h1>
+            <div class="is-size-5 publication-authors">
+              <span class="author-block">
+                <a href="https://github.com/GzyAftermath">Ziyao Guo</a><sup>1,3,4</sup> </span>&nbsp;&nbsp;
+              <span class="author-block">
+                <a href="https://kaiwang960112.github.io/">Kai Wang</a><sup>1,🧐</sup> </span>&nbsp;&nbsp;
+              <span class="author-block">
+                <a href="https://georgecazenavette.github.io/">George Cazenavette</a><sup>2</sup>&nbsp;&nbsp;
+              </span>
+              <span class="author-block">
+                <a href="https://web.xidian.edu.cn/lihui/en/index.html">Hui Li</a><sup>4</sup>&nbsp;&nbsp;
+              </span>
+              <span class="author-block">
+                <a href="https://kpzhang93.github.io/">Kaipeng Zhang</a><sup>3,😎</sup>&nbsp;&nbsp;
+              </span>
+              <span class="author-block">
+                <a href="https://www.comp.nus.edu.sg/~youy/">Yang You</a><sup>1,😎</sup>
+              </span>
+            </div>
+
+            <div class="is-size-5 publication-authors">
+              <span class="author-block"><sup>1</sup>National University of Singapore </span>&nbsp;&nbsp;
+              <span class="author-block"><sup>2</sup>Massachusetts Institute of Technology </span>
+              <span class="author-block"><sup>3</sup>Shanghai Artificial Intelligence Laboratory </span>&nbsp;&nbsp;
+              <span class="author-block"><sup>4</sup>Xidian University</span>
+            </div>
+            <div class="is-size-5 publication-authors">
+              <span class="author-block">🧐 Project Lead</span>&nbsp;&nbsp;&nbsp;
+              <span class="author-block">😎 Corresponding Author </span>
+            </div>
+            <div class="column has-text-centered">
+              <div class="publication-links">
+
+                <!-- PDF Link. -->
+
+                <!-- <span class="link-block">
+                <a href="https://arxiv.org/pdf/2011.12948"
+                   class="external-link button is-normal is-rounded is-dark">
+                  <span class="icon">
+                      <i class="fas fa-file-pdf"></i>
+                  </span>
+                  <span>Paper</span>
+                </a>
+              </span> -->
+                <span class="link-block">
+                  <a href="https://arxiv.org/abs/2310.05773" class="external-link button is-normal is-rounded is-dark">
+                    <span class="icon">
+                      <i class="ai ai-arxiv"></i>
+                    </span>
+                    <span>arXiv</span>
+                  </a>
+                </span>
+                <!-- Code Link. -->
+                <span class="link-block">
+                  <a href="https://github.com/GzyAftermath/DATM"
+                    class="external-link button is-normal is-rounded is-dark">
+                    <span class="icon">
+                      <i class="fab fa-github"></i>
+                    </span>
+                    <span>Code</span>
+                  </a>
+                </span>
+                <!-- Dataset Link. -->
+                <span class="link-block">
+                  <a href="https://drive.google.com/drive/folders/1kZlYgiVrmFEz0OUyxnww3II7FBPQe7W0"
+                    class="external-link button is-normal is-rounded is-dark">
+                    <span class="icon">
+                      <i class="far fa-images"></i>
+                    </span>
+                    <span>Distilled Datasets</span>
+                  </a>
+                </span>
+              </div>
+            </div>
+            </div>
+          </div>
+        </div>
+      </div>
+  </section>
+
+
+  <!-- <section class="hero is-light is-small">
+    <div class="hero-body">
+      <div class="container">
+        <div id="results-carousel" class="carousel results-carousel">
+          <div class="item item-steve">
+            <video poster="" id="steve" autoplay controls muted loop playsinline height="100%">
+              <source src="./static/videos/steve.mp4" type="video/mp4">
+            </video>
+          </div>
+          <div class="item item-chair-tp">
+            <video poster="" id="chair-tp" autoplay controls muted loop playsinline height="100%">
+              <source src="./static/videos/chair-tp.mp4" type="video/mp4">
+            </video>
+          </div>
+          <div class="item item-shiba">
+            <video poster="" id="shiba" autoplay controls muted loop playsinline height="100%">
+              <source src="./static/videos/shiba.mp4" type="video/mp4">
+            </video>
+          </div>
+          <div class="item item-fullbody">
+            <video poster="" id="fullbody" autoplay controls muted loop playsinline height="100%">
+              <source src="./static/videos/fullbody.mp4" type="video/mp4">
+            </video>
+          </div>
+          <div class="item item-blueshirt">
+            <video poster="" id="blueshirt" autoplay controls muted loop playsinline height="100%">
+              <source src="./static/videos/blueshirt.mp4" type="video/mp4">
+            </video>
+          </div>
+          <div class="item item-mask">
+            <video poster="" id="mask" autoplay controls muted loop playsinline height="100%">
+              <source src="./static/videos/mask.mp4" type="video/mp4">
+            </video>
+          </div>
+          <div class="item item-coffee">
+            <video poster="" id="coffee" autoplay controls muted loop playsinline height="100%">
+              <source src="./static/videos/coffee.mp4" type="video/mp4">
+            </video>
+          </div>
+          <div class="item item-toby">
+            <video poster="" id="toby" autoplay controls muted loop playsinline height="100%">
+              <source src="./static/videos/toby2.mp4" type="video/mp4">
+            </video>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section> -->
+
+
+  <section class="section">
+    <div class="container is-max-desktop">
+      <!-- Abstract. -->
+      <div class="columns is-centered has-text-centered">
+        <div class="column is-four-fifths">
+          <h2 class="title is-3">Overview</h2>
+          <div class="content has-text-justified">
+            <p>
+              <b>Dataset Distillation</b> aims at synthesizing a small synthetic dataset such that a model trained on
+              this synthetic set will perform <b>equally well</b> as a model trained on the full, real dataset.
+              Until now, no Dataset Distillation method has reached this completely lossless goal, in part due to the
+              fact that previous methods only remain effective when the size of synthetic dataset is <b>extremely
+                small</b>.
+            </p>
+            <p>
+              In this work, we elucidate why existing methods fail to generate larger, high-quality synthetic sets,
+              taking trajectory matching (TM) based distillation methods as an example.
+              Firstly, We empirically find that the training stage of the trajectories we choose to match (<i>i.e.</i>,
+              <b>early</b> or <b>late</b>) greatly affects the effectiveness of the distilled dataset.
+            </p>
+            <p>
+              Specifically, <b>early</b> trajectories (where the teacher network learns <b>easy</b> patterns) work well
+              for a low-cardinality synthetic set since there are fewer examples wherein to distribute the necessary
+              information.
+              Conversely, <b>late</b> trajectories (where the teacher network learns <b>hard</b> patterns) provide
+              better signals for larger synthetic sets since there are now enough samples to represent the necessary
+              complex patterns.
+            </p>
+            <p>
+              Based on our findings, we propose to align the difficulty of the generated patterns with the size of the
+              synthetic dataset.
+              In doing so, we successfully scale TM-based methods to larger synthetic datasets,
+              achieving <b>lossless dataset distillation</b> for the very first time.
+            </p>
+          </div>
+        </div>
+      </div>
+      <!--/ Abstract. -->
+
+      <!-- Paper video. -->
+      <!-- <div class="columns is-centered has-text-centered">
+      <div class="column is-four-fifths">
+        <h2 class="title is-3">Video</h2>
+        <div class="publication-video">
+          <iframe src="https://www.youtube.com/embed/MrKrnHhk8IA?rel=0&amp;showinfo=0"
+                  frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+        </div>
+      </div>
+    </div> -->
+      <!--/ Paper video. -->
+    </div>
+  </section>
+
+    <!-- Concurrent Work. -->
+    <section class="section">
+      <div class="container">
+    <div class="columns is-centered">
+      <div class="container is-max-desktop content">
+        <h2 class="title is-3">Motivation and Findings</h2>
+  
+        <div class="content has-text-justified">
+          <p>According to <a href="https://arxiv.org/abs/2104.09125">Cazenavette et al</a> and <a href="https://arxiv.org/abs/1706.05394">Arpit et al</a>:</p>
+          <p>
+            1. TM-based methods embed informative patterns into synthetic data by matching expert training strategies.
+          </p>
+          <p>
+            2. DNNs tend to learn <b>easy</b> patterns <b>early</b> in training.
+          </p>
+          <p>
+            Based on this, we infer that patterns gengerated by matching trajectories from <b>earlier</b> training phases are <b>easier</b> for DNNs to learn.
+            Then we explore the effect of matching trajectories from differrnt training phases:
+          </p>
+          <p></p>
+            <img src="./static/images/IPC.png" id="aa" />
+            <p></p>
+            <p>As can be observed, matching early trajectories, which will generate <b>easy</b> patterns, performs well when IPC is low but tend to be harmful as IPC increases.
+            Conversely, matching late trajectories is beneficial in the regime of high IPC.
+            </p>
+            <p>To keep dataset distillation effective in various IPC cases, we propose to <b>align the difficulty of the generated patterns with the size of the synthetic dataset</b>.</p>
+        </div>
+      </div>
+    </div>
+      </div>
+    </section>
+    <!--/ Concurrent Work. -->
+
+  <!-- Concurrent Work. -->
+  <section class="section">
+    <div class="container">
+  <div class="columns is-centered">
+    <div class="container is-max-desktop content">
+      <h2 class="title is-3">Comparison</h2>
+
+      <div class="content has-text-justified">
+        <p>
+          As can be observed in the figure, previous distillation methods work well only when IPC is extremely small.
+          Benefited from our difficulty alignment strategy, our method is effective in all IPC settings.
+          Notably, we distill CIFAR-10 and CIFAR-100 to 1/5 and Tiny ImageNet to 1/10 of their original sizes without any performance loss on ConvNet, offering the first lossless method of dataset distillation.
+        </p>
+          <img src="./static/images/comparison.png" id="img_comparison" />
+          
+      </div>
+    </div>
+  </div>
+    </div>
+  </section>
+  <!--/ Concurrent Work. -->
+
+
+  <section class="section">
+    <div class="container">
+      <!-- Animation. -->
+      <div class="columns is-centered">
+        <div class="container is-max-desktop content">
+          <h2 class="title is-3">Visualization</h2>
+
+          <!-- Interpolating. -->
+          <div class="content has-text-justified">
+            <p>
+              What do <b>easy</b> patterns and <b>hard</b> patterns look like?
+            </p>
+            <p>
+              Here we visualize the images synthesized by matching <b>early</b> and <b>late</b> trajectories, where <b>easy</b> patterns and <b>hard</b> patterns are embedded respectively.
+
+            </p>
+            <p>
+              As can be observed, matching <b>early</b> trajectories will blend the target object into the background and blur the details, which help DNNs to learn to identify commen (<b>easy</b>) samples according to their basic patterns.
+            </p>
+            <p>
+              Conversely, matching <b>late</b> trajectories will give more detials about the target, which help DNNs to learn to identify the outlier (<b>hard</b>) samples.
+            </p>
+            <p>
+
+            </p>
+          </div>
+        </div>
+      </div>
+          <div class="columns is-vcentered interpolation-panel">
+            <div class="column is-4 has-text-centered">
+              <img src="http://space.cnblogs.com/images/logo.gif" id="img_early" />
+              <p>Match Early Trajectories</p>
+            </div>
+            <div class="column is-4 has-text-centered">
+
+              <img src="./static/interpolation/early/0.jpg" class="interpolation-image"
+                alt="Interpolate start reference image." />
+              <input class="slider is-fullwidth is-large is-info" id="interpolation-slider" step="1" min="0" max="4"
+                value="0" type="range">
+            </div>
+            <div class="column is-4 has-text-centered">
+              <img src="http://space.cnblogs.com/images/logo.gif" id="img_late" />
+
+              <p class="is-bold">Match Late Trajectories</p>
+            </div>
+          </div>
+          <br />
+          <!--/ Interpolating. -->
+      <!--/ Animation. -->
+
+
+      <!-- Concurrent Work. -->
+      <div class="columns is-centered">
+        <div class="container is-max-desktop content">
+          <h2 class="title is-3">Related works</h2>
+
+          <div class="content has-text-justified">
+            <p>
+              1.<a href="https://arxiv.org/abs/2104.09125">Dataset Distillation by Matching Training Trajectories</a>.
+            </p>
+            <p>
+              2.<a href="https://arxiv.org/abs/2203.01531">CAFE: Learning to Condense Dataset by Aligning Features</a>.
+            </p>
+            <p>
+              3.<a href="https://arxiv.org/abs/2305.01649">Generalizing Dataset Distillation via Deep Generative Prior</a>.
+            </p>
+            <p>
+              4.<a href="https://arxiv.org/abs/2302.14416">DREAM: Efficient Dataset Distillation by Representative Matching</a>.
+            </p>
+          </div>
+        </div>
+      </div>
+      <!--/ Concurrent Work. -->
+
+    </div>
+  </section>
+
+
+  <section class="section" id="BibTeX">
+    <div class="container is-max-desktop content">
+      <h2 class="title">BibTeX</h2>
+      <pre><code>
+@misc{guo2023lossless,
+      title={Towards Lossless Dataset Distillation via Difficulty-Aligned Trajectory Matching}, 
+      author={Ziyao Guo and Kai Wang and George Cazenavette and Hui Li and Kaipeng Zhang and Yang You},
+      year={2023},
+      eprint={2310.05773},
+      archivePrefix={arXiv},
+      primaryClass={cs.CV}
+}
+</code></pre>
+    </div>
+  </section>
+
+
+  <footer class="footer">
+    <div class="container">
+      <div class="content has-text-centered">
+      </div>
+      <div class="columns is-centered">
+        <div class="column is-8">
+          <div class="content">
+            <p>
+              This website is forked from the <a href="https://github.com/nerfies/nerfies.github.io">Nerfies
+                website</a>.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+</body>
+
+</html>

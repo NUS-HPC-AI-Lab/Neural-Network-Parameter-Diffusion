@@ -28,7 +28,9 @@ class="center">
 [Provide instructions on how to use or replicate the experiments mentioned in the paper.]
 
 ## Citation
+If you found our work useful, please consider citing us.
 
+```
 @article{wang2024neural,
       title={Neural Network Diffusion}, 
       author={Kai Wang, Zhaopan Xu, Zhuang Liu, Yukun Zhou, Zelin Zang, Trevor Darrell and Yang You},
@@ -37,7 +39,7 @@ class="center">
       archivePrefix={arXiv},
       primaryClass={cs.CV}
 }
-
+```
 ## Acknowledgments
 
 We thank Kaiming He, Dianbo Liu, Mingjia Shi, Zheng Zhu, Jiawei Liu, Yong Liu, Ziheng Qin, Zangwei Zheng, Yifan Zhang, Xiangyu Peng, Junhao Zhang, Wangbo Zhao, Hongyan Chang, and David Yin for valuable discussions and feedbacks.

@@ -45,4 +45,4 @@ If you found our work useful, please consider citing us.
 ```
 ## Acknowledgments
 
-We thank Kaiming He, Dianbo Liu, Mingjia Shi, Zheng Zhu, Jiawei Liu, Yong Liu, Ziheng Qin, Zangwei Zheng, Yifan Zhang, Xiangyu Peng, Junhao Zhang, Wangbo Zhao, Hongyan Chang, and David Yin for valuable discussions and feedbacks.
+We thank [Kaiming He](https://kaiminghe.github.io/), Dianbo Liu, Mingjia Shi, Zheng Zhu, Jiawei Liu, Yong Liu, Ziheng Qin, Zangwei Zheng, Yifan Zhang, Xiangyu Peng, Junhao Zhang, Wangbo Zhao, Hongyan Chang, and David Yin for valuable discussions and feedbacks.

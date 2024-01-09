@@ -1,0 +1,24 @@
+defaults:
+  - task: cifar100
+  - system: autoencoder
+  - _self_
+
+device:
+  cuda_visible_devices:  "0,1,2,3"
+  id: 1
+  cuda: cuda:${device.id}
+
+seed: 42
+process_title: wangkai
+
+output_dir: outputs/debug/
+
+
+
+hydra:
+  output_subdir: config
+  run:
+    dir: ${output_dir}
+  sweep:
+    dir: ${output_dir}
+    subdir: ${hydra.job.override_dirname}

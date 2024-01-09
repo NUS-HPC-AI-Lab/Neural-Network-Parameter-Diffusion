@@ -1,0 +1,53 @@
+name: encoder
+
+model:
+  arch:
+    _target_: core.module.modules.encoder.small
+    in_dim: 2048
+    input_noise_factor: 0.001
+    latent_noise_factor: [0, 1.0]
+
+  data_transform:
+
+train:
+  optimizer:
+    _target_: torch.optim.AdamW
+    lr: 1e-3
+    weight_decay: 2e-6
+
+  lr_scheduler:
+
+  loss_func:
+    _target_: torch.nn.MSELoss
+    reduction: sum
+
+  trainer:
+    _target_:  pytorch_lightning.trainer.Trainer
+    max_epochs: 3000
+    check_val_every_n_epoch:
+    val_check_interval : 500
+    log_every_n_steps: 1
+    limit_val_batches: 1
+    limit_test_batches: 1
+    devices:
+    - ${device.id}
+
+    enable_model_summary: false
+
+    callbacks:
+    - _target_: pytorch_lightning.callbacks.ModelCheckpoint
+      dirpath: ${output_dir}/
+      filename: 'encoder-{epoch}-{loss:.4f}'
+      monitor: 'loss'
+      mode: 'min'
+      save_top_k: 3
+
+      save_weights_only: true
+      save_last: true
+      verbose: true
+
+    logger:
+      _target_:  pytorch_lightning.loggers.TensorBoardLogger
+      save_dir: ${output_dir}/system
+      name: '.'
+      version: '.'

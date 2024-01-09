@@ -1,9 +1,0 @@
-# CUDA_VISIBLE_DEVICES=0  python per_test.py --param 'conv3'  
-# CUDA_VISIBLE_DEVICES=0  python per_test.py --param 'conv4' 
-# CUDA_VISIBLE_DEVICES=0  python per_test.py --param 'conv5' 
-CUDA_VISIBLE_DEVICES=7  python per_test.py --param '405' --dataset cifar10
-CUDA_VISIBLE_DEVICES=7  python per_test.py --param '502' --dataset cifar10
-CUDA_VISIBLE_DEVICES=7  python per_test.py --param '1138' --dataset cifar10
-CUDA_VISIBLE_DEVICES=7  python per_test.py --param '6766' --dataset cifar10
-CUDA_VISIBLE_DEVICES=7  python per_test.py --param '13314' --dataset cifar10
-CUDA_VISIBLE_DEVICES=7  python per_test.py --param 'conv3' --dataset cifar10

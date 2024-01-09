@@ -1,6 +1,6 @@
 # Neural Network Diffusion
 
-### [Paper](https://arxiv.org/abs/2311.09215) | [Project Page](https://kirill-vish.github.io/beyond-imagenet-accuracy/)
+### [Paper](xxxxxxx) | [Project Page](xxxxxx)
 
 ![Motivation of p-diff](figs/motivation_v3.gif)
 

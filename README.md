@@ -17,6 +17,11 @@ class="center">
 
 </p>
 
+ <p style="text-align: justify;">
+ Figure: Illustration of the proposed p-diff framework. Our approach consists of two processes, namely parameter autoencoder and generation. 
+  Parameter autoencoder aims to extract the latent representations that can generate high-performing model parameters via the decoder. The extracted representations are fed into a standard latent diffusion model (LDM). During the inference, we freeze the parameters of the autoencoder's decoder. The generated parameters are obtained via feeding random noise to the LDM and trained decoder.
+</p>
+
 ## Authors
 
 - [Kai Wang](https://kaiwang960112.github.io/)<sup>1</sup>, [Zhaopan Xu](https://scholar.google.com.hk/citations?user=qNWDwOcAAAAJ&hl=zh-CN)<sup>1</sup>, [Zhuang Liu](https://liuzhuang13.github.io/)<sup>2</sup>, Yukun Zhou, [Zelin Zang](https://scholar.google.com/citations?user=foERjnQAAAAJ&hl=zh-CN)<sup>1</sup>, [Trevor Darrell](https://people.eecs.berkeley.edu/~trevor/)<sup>3</sup>, and [Yang You](https://www.comp.nus.edu.sg/~youy/)<sup>1</sup>

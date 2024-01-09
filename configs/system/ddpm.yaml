@@ -8,6 +8,10 @@ model:
       in_channel: 1
       in_dim: 52
 
+#     model:
+#       _target_: core.module.modules.od_unet.AE_CNN_bottleneck
+#       in_dim: 52
+
   data_transform:
     system_cls:
       _target_: core.system.encoder.EncoderSystem

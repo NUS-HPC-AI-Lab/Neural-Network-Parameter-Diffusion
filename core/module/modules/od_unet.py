@@ -61,6 +61,13 @@ class ODUnetDecoder(nn.Module):
         return layer
 
     def forward(self, x, time_info, **kwargs):
+        y = x[-1]
+        for i, layer in enumerate(self.decoder):
+            if i == len(self.decoder) - 1:
+                y = layer(y + time_info)
+                break
+            y = layer(y + time_info) + x[2-i]
+        return x
 
 
 
@@ -75,10 +82,17 @@ class ODUnet(nn.Module):
         if dec_channel_list is None:
             dec_channel_list = [512, 256, 128, 64]
 
+        enc_dim_list = [in_dim // (fold_rate ** i) for i in range(len(enc_channel_list))]
+        dec_dim_list = [in_dim // (fold_rate ** (4 - i)) for i in range(len(dec_channel_list))]
+
         self.in_dim = in_dim
 
-        self.encoder = ODUnetEncoder(in_dim, enc_channel_list, fold_rate, kernal_size)
-        self.deoder = ODUnetDecoder(in_dim, dec_channel_list, fold_rate, kernal_size)
+        enc_channel_list = [in_channel] + enc_channel_list
+        dec_channel_list = dec_channel_list + [in_channel]
+
+
+        self.encoder = ODUnetEncoder(enc_dim_list, enc_channel_list, fold_rate, kernal_size)
+        self.deoder = ODUnetDecoder(dec_dim_list, dec_channel_list, fold_rate, kernal_size)
         self.time_encode = nn.Embedding(time_step, self.in_dim)
 
 

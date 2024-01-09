@@ -1,5 +1,5 @@
 # Neural Network Diffusion
-![Motivation of P-diff](figs/motivation.gif)
+![Motivation of P-diff](figs/motivation_v2.gif)
 
 ## Overview
 

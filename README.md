@@ -1,10 +1,17 @@
 # Neural Network Diffusion
 ![Motivation of p-diff](figs/motivation_v3.gif)
 
+This repository contains the code and implementation details for the research paper titled "Neural Network Diffusion." The paper explores novel paradigms in deep learning, specifically focusing on the diffusion models for generating high-performing neural network parameters.
+
+
 
 ## Overview
 
-This repository contains the code and implementation details for the research paper titled "Neural Network Diffusion." The paper explores novel paradigms in deep learning, specifically focusing on the diffusion models for generating high-performing neural network parameters.
+<p align="center">
+<img src="./figs/pipeline_1129_v2.pdf" width=35% height=35%
+class="center">
+<figcaption>Figure: Models are often compared only by their ImageNet accuracy, without looking at many other important behaviors. In our work, we analyze models with similar ImageNet accuracies and find that they have different properties.</figcaption>
+</p>
 
 ## Authors
 

@@ -29,10 +29,15 @@ class="center">
 
 ## Citation
 
-If you find this work useful in your research, please consider citing:
-
-[Author et al., Neural Network Diffusion, Journal/Conference, Year]
+@article{wang2024neural,
+      title={Neural Network Diffusion}, 
+      author={Kai Wang, Zhaopan Xu, Zhuang Liu, Yukun Zhou, Zelin Zang, Trevor Darrell and Yang You},
+      year={2024},
+      eprint={2401.xxxx},
+      archivePrefix={arXiv},
+      primaryClass={cs.CV}
+}
 
 ## Acknowledgments
 
-We would like to express our gratitude to [names] for their valuable feedback during the development of this research.
+We thank Kaiming He, Dianbo Liu, Mingjia Shi, Zheng Zhu, Jiawei Liu, Yong Liu, Ziheng Qin, Zangwei Zheng, Yifan Zhang, Xiangyu Peng, Junhao Zhang, Wangbo Zhao, Hongyan Chang, and David Yin for valuable discussions and feedbacks.

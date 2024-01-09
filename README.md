@@ -1,5 +1,9 @@
 # Neural Network Diffusion
-![Motivation of P-diff](figs/motivation_v2.gif)
+<div style="display: flex; justify-content: space-between;">
+  <img src="figs/image-diff.gif" width="45%" alt="First GIF">
+  <img src="figs/p-diff.gif" width="45%" alt="Second GIF">
+</div>
+
 
 ## Overview
 

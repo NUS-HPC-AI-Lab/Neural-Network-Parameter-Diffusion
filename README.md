@@ -59,17 +59,20 @@ The script is run in two steps, one to obtain the relevant parameters for the ta
 
 We use  [Hydra](https://hydra.cc/docs/intro/) package for our configuration. You can modify the configuration by modifying the config file as well as command line. 
 
-For example, for CIFAR10 Resnet18, you can change the config file configs/task/cifar100.yaml
+For example, for CIFAR10 Resnet18, you can change the config file  [configs/task/cifar100.yaml](https://github.com/NUS-HPC-AI-Lab/Neural-Network-Diffusion/blob/main/configs/task/cifar100.yaml).
 
 ```
-Original: 
 data:
   root: cifar100 path
   dataset: cifar100
   batch_size: 64
   num_workers: 1
 
-Changed:
+```
+
+to:
+
+```
 data:
   root: cifar10 path
   dataset: cifar10

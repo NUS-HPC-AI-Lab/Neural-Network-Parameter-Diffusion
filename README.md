@@ -1,4 +1,7 @@
 # Neural Network Diffusion
+
+### [Paper](https://arxiv.org/abs/2311.09215) | [Project Page](https://kirill-vish.github.io/beyond-imagenet-accuracy/)
+
 ![Motivation of p-diff](figs/motivation_v3.gif)
 
 This repository contains the code and implementation details for the research paper titled "Neural Network Diffusion." The paper explores novel paradigms in deep learning, specifically focusing on diffusion models for generating high-performing neural network parameters.

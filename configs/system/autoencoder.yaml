@@ -36,7 +36,7 @@ train:
 
     callbacks:
     - _target_: pytorch_lightning.callbacks.ModelCheckpoint
-      dirpath: ${output_dir}/
+      dirpath: ${output_dir}/autoencoder
       filename: 'encoder-{epoch}-{loss:.4f}'
       monitor: 'loss'
       mode: 'min'
@@ -48,6 +48,6 @@ train:
 
     logger:
       _target_:  pytorch_lightning.loggers.TensorBoardLogger
-      save_dir: ${output_dir}/system
+      save_dir: ${output_dir}/autoencoder/tensorboards/${%Y-%m-%d_%H-%M-%S}
       name: '.'
       version: '.'

@@ -82,13 +82,21 @@ class DDPM(BaseSystem):
             return {'samples': samples, 'history': history}
         return {'samples': samples}
 
+    def pre_process(self, batch):
+        if hasattr(self, 'data_transform') or self.data_transform is not None:
+            batch = self.data_transform.pre_process(batch)
+        return batch
+
+    def post_process(self, outputs):
+        if hasattr(self, 'data_transform') or self.data_transform is not None:
+            outputs = self.data_transform.post_process(outputs)
+        return outputs
+
     def validation_step(self, batch, batch_idx, **kwargs: Any):
+        batch = self.pre_process(batch)
         outputs = self.generate(batch, 10)
 
-        if hasattr(self, 'data_transform') or self.data_transform is not None:
-            params = self.data_transform.post_process(outputs)
-        else:
-            params = outputs
+        params = self.post_process(outputs)
 
         accs = []
         for i in range(params.shape[0]):
@@ -102,8 +110,8 @@ class DDPM(BaseSystem):
         self.log('best_g_acc', best_acc)
         return {'best_g_acc': best_acc}
 
-
     def forward(self, batch, **kwargs):
+        batch = self.pre_process(batch)
         model = self.model
         time = (torch.rand(batch.shape[0]) * self.n_timestep).type(torch.int64).to(batch.device)
 

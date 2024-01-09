@@ -24,11 +24,66 @@ class="center">
 
 > **Abstract:** Diffusion models have achieved remarkable success in image and video generation. In this work, we demonstrate that diffusion models can also generate high-performing neural network parameters. Our approach is simple, utilizing an autoencoder and a standard latent diffusion model. The autoencoder extracts latent representations of the trained network parameters. A diffusion model is then trained to synthesize these latent parameter representations from random noise. It then generates new representations that are passed through the autoencoder's decoder, whose outputs are ready to use as new sets of network parameters. Across various architectures and datasets, our diffusion process consistently generates models of comparable or improved performance over SGD-trained models, with minimal additional cost. Our results encourage more exploration on the versatile use of diffusion models. 
 
+## Installation
+
+1. Clone the repository:
+
+```
+git clone https://github.com/NUS-HPC-AI-Lab/Neural-Network-Diffusion.git
+```
+
+2. Create a new Conda environment and activate it: 
+
+```
+conda env create -f environment.yaml
+conda activate mmcomp
+```
+
+or install necessary package by:
+
+```
+pip install -r requirement.txt
+```
+
+### **Baseline**
+
+For CIFAR100 Resnet18 parameter generation, you can run the script:
+
+```
+bash ./cifar100_resnet18_k200.sh
+```
+
+The script is run in two steps, one to obtain the relevant parameters for the task, the second to train and test the generative model of the parameters.
+
+### **Ablation**
+
+We use  [Hydra](https://hydra.cc/docs/intro/) package for our configuration. You can modify the configuration by modifying the config file as well as command line. 
+
+For example, for CIFAR10 Resnet18, you can change the config file configs/task/cifar100.yaml
+
+```
+Original: 
+data:
+  root: cifar100 path
+  dataset: cifar100
+  batch_size: 64
+  num_workers: 1
+
+Changed:
+data:
+  root: cifar10 path
+  dataset: cifar10
+  batch_size: 64
+  num_workers: 1
+```
+
+or you can change the Neural Network training data (K) by command line:
+
+```
+python train_p_diff.py task.param.k=xxx
+```
 
 
-## Getting Started
-
-[Provide instructions on how to use or replicate the experiments mentioned in the paper.]
 
 ## Citation
 If you found our work useful, please consider citing us.

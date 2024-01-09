@@ -45,4 +45,4 @@ If you found our work useful, please consider citing us.
 ```
 ## Acknowledgments
 
-We thank [Kaiming He](https://kaiminghe.github.io/), [Dianbo Liu](https://www.cogai4sci.com/), Mingjia Shi, Zheng Zhu, Jiawei Liu, Yong Liu, Ziheng Qin, [Zangwei Zheng](https://zhengzangw.github.io/), [Yifan Zhang](https://sites.google.com/view/yifan-zhang/%E9%A6%96%E9%A1%B5), Xiangyu Peng, Junhao Zhang, Wangbo Zhao, Hongyan Chang, and David Yin for valuable discussions and feedbacks.
+We thank [Kaiming He](https://kaiminghe.github.io/), [Dianbo Liu](https://www.cogai4sci.com/), Mingjia Shi, [Zheng Zhu](https://scholar.google.com/citations?user=NmwjI0AAAAAJ&hl=en), [Jiawei Liu](https://jia-wei-liu.github.io/), [Yong Liu](https://ai.comp.nus.edu.sg/people/yong/), [Ziheng Qin](https://scholar.google.com/citations?user=I04VhPMAAAAJ&hl=zh-CN), [Zangwei Zheng](https://zhengzangw.github.io/), [Yifan Zhang](https://sites.google.com/view/yifan-zhang/%E9%A6%96%E9%A1%B5), [Xiangyu Peng](https://scholar.google.com/citations?user=KRUTk7sAAAAJ&hl=zh-CN), Hongyan Chang, and David Yin for valuable discussions and feedbacks.

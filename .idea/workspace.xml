@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="4bca731b-a2d5-4126-b14b-5a42cb30df00" name="变更" comment="">
+      <change beforePath="$PROJECT_DIR$/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/index.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/css/bulma-carousel.min.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/css/bulma-slider.min.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/css/bulma.css.map.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/css/bulma.min.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/css/fontawesome.all.min.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/css/index.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/images/IPC.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/images/comparison.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/images/logo.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/interpolation/early/0.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/interpolation/early/1.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/interpolation/early/10.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/interpolation/early/2.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/interpolation/early/3.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/interpolation/early/4.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/interpolation/early/5.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/interpolation/early/6.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/interpolation/early/7.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/interpolation/early/8.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/interpolation/early/9.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/interpolation/late/0.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/interpolation/late/1.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/interpolation/late/10.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/interpolation/late/2.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/interpolation/late/3.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/interpolation/late/4.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/interpolation/late/5.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/interpolation/late/6.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/interpolation/late/7.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/interpolation/late/8.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/interpolation/late/9.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/js/bulma-carousel.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/js/bulma-carousel.min.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/js/bulma-slider.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/js/bulma-slider.min.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/js/fontawesome.all.min.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/js/index.js" beforeDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="GitSEFilterConfiguration">
+    <file-type-list>
+      <filtered-out-file-type name="LOCAL_BRANCH" />
+      <filtered-out-file-type name="REMOTE_BRANCH" />
+      <filtered-out-file-type name="TAG" />
+      <filtered-out-file-type name="COMMIT_BY_MESSAGE" />
+    </file-type-list>
+  </component>
+  <component name="MarkdownSettingsMigration">
+    <option name="stateVersion" value="1" />
+  </component>
+  <component name="ProjectId" id="2aiki1xCXcUqNQa6tPxF2CYLR8J" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+    <option name="sortByType" value="true" />
+  </component>
+  <component name="PropertiesComponent">
+    <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
+    <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
+    <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="WebServerToolWindowPanel.toolwindow.highlight.mappings" value="true" />
+    <property name="WebServerToolWindowPanel.toolwindow.highlight.symlinks" value="true" />
+    <property name="WebServerToolWindowPanel.toolwindow.show.date" value="false" />
+    <property name="WebServerToolWindowPanel.toolwindow.show.permissions" value="false" />
+    <property name="WebServerToolWindowPanel.toolwindow.show.size" value="false" />
+    <property name="last_opened_file_path" value="$USER_HOME$/Desktop/计算机视觉大作业" />
+    <property name="node.js.detected.package.eslint" value="true" />
+    <property name="node.js.detected.package.tslint" value="true" />
+    <property name="node.js.selected.package.eslint" value="(autodetect)" />
+    <property name="node.js.selected.package.tslint" value="(autodetect)" />
+    <property name="settings.editor.selected.configurable" value="preferences.pluginManager" />
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="应用程序级" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="默认任务">
+      <changelist id="4bca731b-a2d5-4126-b14b-5a42cb30df00" name="变更" comment="" />
+      <created>1704808910488</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1704808910488</updated>
+      <workItem from="1704808911956" duration="23754000" />
+    </task>
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+</project>

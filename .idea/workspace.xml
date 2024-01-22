@@ -5,44 +5,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="4bca731b-a2d5-4126-b14b-5a42cb30df00" name="变更" comment="">
-      <change beforePath="$PROJECT_DIR$/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/index.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/static/css/bulma-carousel.min.css" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/static/css/bulma-slider.min.css" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/static/css/bulma.css.map.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/static/css/bulma.min.css" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/static/css/fontawesome.all.min.css" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/static/css/index.css" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/static/images/IPC.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/static/images/comparison.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/static/images/logo.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/static/interpolation/early/0.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/static/interpolation/early/1.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/static/interpolation/early/10.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/static/interpolation/early/2.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/static/interpolation/early/3.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/static/interpolation/early/4.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/static/interpolation/early/5.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/static/interpolation/early/6.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/static/interpolation/early/7.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/static/interpolation/early/8.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/static/interpolation/early/9.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/static/interpolation/late/0.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/static/interpolation/late/1.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/static/interpolation/late/10.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/static/interpolation/late/2.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/static/interpolation/late/3.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/static/interpolation/late/4.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/static/interpolation/late/5.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/static/interpolation/late/6.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/static/interpolation/late/7.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/static/interpolation/late/8.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/static/interpolation/late/9.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/static/js/bulma-carousel.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/static/js/bulma-carousel.min.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/static/js/bulma-slider.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/static/js/bulma-slider.min.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/static/js/fontawesome.all.min.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/static/js/index.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.vscode/settings.json" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -78,7 +42,7 @@
     <property name="WebServerToolWindowPanel.toolwindow.show.date" value="false" />
     <property name="WebServerToolWindowPanel.toolwindow.show.permissions" value="false" />
     <property name="WebServerToolWindowPanel.toolwindow.show.size" value="false" />
-    <property name="last_opened_file_path" value="$USER_HOME$/Desktop/计算机视觉大作业" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/../../../tmp/pdiff" />
     <property name="node.js.detected.package.eslint" value="true" />
     <property name="node.js.detected.package.tslint" value="true" />
     <property name="node.js.selected.package.eslint" value="(autodetect)" />
@@ -94,6 +58,8 @@
       <option name="presentableId" value="Default" />
       <updated>1704808910488</updated>
       <workItem from="1704808911956" duration="23754000" />
+      <workItem from="1705501682027" duration="1211000" />
+      <workItem from="1705886602580" duration="594000" />
     </task>
     <servers />
   </component>

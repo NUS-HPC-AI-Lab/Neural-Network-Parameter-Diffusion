@@ -6,7 +6,6 @@
   <component name="ChangeListManager">
     <list default="true" id="4bca731b-a2d5-4126-b14b-5a42cb30df00" name="变更" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.vscode/settings.json" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -59,7 +58,7 @@
       <updated>1704808910488</updated>
       <workItem from="1704808911956" duration="23754000" />
       <workItem from="1705501682027" duration="1211000" />
-      <workItem from="1705886602580" duration="594000" />
+      <workItem from="1705886602580" duration="2872000" />
     </task>
     <servers />
   </component>

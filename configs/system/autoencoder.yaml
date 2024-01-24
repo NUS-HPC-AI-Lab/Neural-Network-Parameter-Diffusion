@@ -48,6 +48,6 @@ train:
 
     logger:
       _target_:  pytorch_lightning.loggers.TensorBoardLogger
-      save_dir: ${output_dir}/autoencoder/tensorboards/${%Y-%m-%d_%H-%M-%S}
+      save_dir: ${output_dir}/autoencoder/tensorboards/${now:%Y-%m-%d-%H-%M-%S}
       name: '.'
       version: '.'

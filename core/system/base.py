@@ -11,10 +11,10 @@ from pytorch_lightning.callbacks import ModelCheckpoint
 import types
 
 class BaseSystem(abc.ABC, pl.LightningModule):
-    def __init__(self, cfg, task_func, **kwargs):
+    def __init__(self, cfg, task, **kwargs):
         super(BaseSystem, self).__init__()
         self.save_hyperparameters()
-        self.task_func = task_func
+        self.task = task
         # when save  hyperparameters, the self.task will be ignored
         self.config = cfg
         self.automatic_optimization = False
@@ -41,9 +41,13 @@ class BaseSystem(abc.ABC, pl.LightningModule):
         trainer = hydra.utils.instantiate(self.train_cfg.trainer)
         return trainer
 
+    def task_func(self, input):
+        return self.task.test_g_model(input)
+
     @staticmethod
     def system_training(system, datamodule, **kwargs):
         trainer = system.build_trainer()
+        pdb.set_trace()
         trainer.fit(system, datamodule=datamodule)
         print("best model starting saving")
 

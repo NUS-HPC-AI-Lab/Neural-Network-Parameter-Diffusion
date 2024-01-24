@@ -43,11 +43,11 @@ class Runner(object):
         # build task
         task_cls = tasks[cfg.task.name]
         self.task = task_cls(cfg.task, **kwargs)
-        test_func = self.task.test_g_model
+        task = self.task
 
         # build system
         self.system_cls = system[cfg.system.name]
-        self.system = self.system_cls(cfg.system, test_func, **kwargs)
+        self.system = self.system_cls(cfg.system, task, **kwargs)
 
         # running
         self.output_dir = cfg.output_dir

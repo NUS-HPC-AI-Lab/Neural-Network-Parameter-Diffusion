@@ -5,7 +5,7 @@ defaults:
 
 device:
   cuda_visible_devices:  "0,1,2,3"
-  id: 1
+  id: 2
   cuda: cuda:${device.id}
 
 seed: 42

@@ -81,9 +81,13 @@ class CFTask(BaseTask):
         eval_loader = self.eval_loader
         train_layer = self.cfg.train_layer
 
+        if train_layer == 'all':
+            train_layer = [name for name, module in net.named_parameters()]
+
         data_path = getattr(self.cfg, 'save_root', 'param_data')
 
-        tmp_path = os.path.join(data_path, 'tmp')
+        tmp_path = os.path.join(data_path, 'tmp_{}'.format(datetime.datetime.now().strftime('%Y-%m-%d_%H-%M-%S')))
+        # tmp_path = os.path.join(data_path, 'tmp')
         final_path = os.path.join(data_path, datetime.datetime.now().strftime('%Y-%m-%d_%H-%M-%S'))
 
         os.makedirs(tmp_path, exist_ok=True)
@@ -107,8 +111,8 @@ class CFTask(BaseTask):
             if i >= epoch:
                 parameters.append(state_part(train_layer, net))
                 save_model_accs.append(acc)
-                if len(parameters) == 10 or epoch == all_epoch - 1:
-                    torch.save(parameters, os.path.join(tmp_path, "p_data_{}.pt".format(epoch)))
+                if len(parameters) == 10 or i == all_epoch - 1:
+                    torch.save(parameters, os.path.join(tmp_path, "p_data_{}.pt".format(i)))
                     parameters = []
 
             scheduler.step()
@@ -155,7 +159,7 @@ class CFTask(BaseTask):
                                                             os.path.basename(__file__)))
 
         # delete the tmp_path
-        # shutil.rmtree(tmp_path)
+        shutil.rmtree(tmp_path)
         print("data process over")
         return {'save_path': final_path}
 

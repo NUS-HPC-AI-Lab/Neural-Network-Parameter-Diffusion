@@ -1,4 +1,5 @@
 import abc
+import hydra
 
 class BaseTask():
     def __init__(self, config, **kwargs):
@@ -8,8 +9,13 @@ class BaseTask():
     def init_task_data(self):
         pass
 
-    def test(self, **kwargs):
-        self.test_g_model(**kwargs)
+    def build_model(self):
+        # get from param_data or init from cfg
+        return hydra.utils.instantiate(self.cfg.model)
+
+    def build_optimizer(self, net):
+        # get from param_data or init from cfg
+        return hydra.utils.instantiate(self.cfg.optimizer, net.parameters())
 
     def get_task_data(self):
         return self.task_data

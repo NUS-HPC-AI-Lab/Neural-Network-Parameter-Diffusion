@@ -1,6 +1,6 @@
 import hydra.utils
 import torch
-
+import numpy as np
 from .base import BaseSystem
 import torch.nn as nn
 import pytorch_lightning as pl
@@ -17,6 +17,23 @@ class VAESystem(BaseSystem):
         total_loss = output['loss']
         self.log('loss', total_loss.cpu().detach().mean().item(), on_epoch=True, prog_bar=True, logger=True)
         return total_loss
+
+    def test_step(self, batch, batch_idx, **kwargs):
+        print('---------------------------------')
+        print('Test the VAE model')
+        ae_rec_accs = []
+        vae_params = self.generate(100)
+        for i, param in enumerate(vae_params):
+            acc, test_loss, output_list = self.task_func(param)
+            ae_rec_accs.append(acc)
+
+        best_ae = max(ae_rec_accs)
+        print(f'VAE reconstruction models accuracy:{ae_rec_accs}')
+        print(f'VAE reconstruction models best accuracy:{best_ae}')
+        print(f"VAE reconstruction models average accuracy:{sum(ae_rec_accs) / len(ae_rec_accs)}")
+        print(f"VAE reconstruction models median accuracy:{np.median(ae_rec_accs)}")
+        print('---------------------------------')
+        self.log('vae_acc', best_ae)
 
     def validation_step(self, batch, batch_idx, **kwargs):
         # todo
@@ -40,9 +57,9 @@ class VAESystem(BaseSystem):
             ae_rec_accs.append(acc)
 
         best_ae = max(ae_rec_accs)
-        print(f'AE reconstruction models accuracy:{ae_rec_accs}')
-        print(f'AE reconstruction models best accuracy:{best_ae}')
-        print(f"AE reconstruction models average accuracy:{sum(ae_rec_accs)/len(ae_rec_accs)}")
+        print(f'VAE reconstruction models accuracy:{ae_rec_accs}')
+        print(f'VAE reconstruction models best accuracy:{best_ae}')
+        print(f"VAE reconstruction models average accuracy:{sum(ae_rec_accs)/len(ae_rec_accs)}")
         print('---------------------------------')
         self.log('vae_acc', best_ae)
 

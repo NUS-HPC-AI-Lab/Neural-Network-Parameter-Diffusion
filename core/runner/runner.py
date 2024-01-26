@@ -1,3 +1,5 @@
+import pdb
+
 import hydra.utils
 import torch
 import pytorch_lightning as pl
@@ -60,10 +62,20 @@ def train_generation(cfg):
     system = system_cls(cfg)
     datamodule = system.get_task().get_param_data()
     # running
-
-    cwd = os.path.join(cfg.output_dir, cfg.system.name, time.strftime("%Y-%m-%d-%H-%M-%S", time.localtime()))
     trainer: Trainer = hydra.utils.instantiate(cfg.system.train.trainer)
     trainer.fit(system, datamodule=datamodule)
+    trainer.test(system, datamodule=datamodule)
+
+    return {}
+
+def test_generation(cfg):
+    init_experiment(cfg)
+    system_cls = systems[cfg.system.name]
+    system = system_cls.load_from_checkpoint(cfg.load_system_checkpoint, config=cfg)
+    datamodule = system.get_task().get_param_data()
+    # running
+    trainer: Trainer = hydra.utils.instantiate(cfg.system.train.trainer)
+    trainer.test(system, datamodule=datamodule)
 
     return {}
 

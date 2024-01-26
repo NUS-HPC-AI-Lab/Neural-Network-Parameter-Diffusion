@@ -12,10 +12,10 @@ model:
 #       _target_: core.module.modules.od_unet.AE_CNN_bottleneck
 #       in_dim: 52
 
-  data_transform:
-    system_cls:
-      _target_: core.system.encoder.EncoderSystem
-    checkpoint_path: ${output_dir}/autoencoder/checkpoints/last.ckpt
+data_transform:
+  system_cls:
+    _target_: core.system.encoder.EncoderSystem
+  checkpoint_path: ${output_dir}/autoencoder/checkpoints/last.ckpt
 
 train:
   optimizer:

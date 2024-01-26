@@ -109,6 +109,7 @@ class Latent_AE_cnn_small(nn.Module):
         # self.time_encode = nn.Embedding(time_step, self.real_input_dim)
 
     def forward(self, input):
+        input += torch.randn(input.shape).to(input.device) * 0.001
         input_shape = input.shape
         if len(input.size()) == 2:
             input = input.view(input.size(0), 1, -1)
@@ -131,7 +132,7 @@ class Latent_AE_cnn_small(nn.Module):
         emb_enc3 = self.enc3(emb_enc2)
         emb_enc4 = self.enc4(emb_enc3)
 
-        noise_factor = 0.1
+        noise_factor = 0.5
         emb_enc4 = emb_enc4 + torch.randn_like(emb_enc4) * noise_factor
         emb_enc4 = torch.clamp(emb_enc4, -1, 1)
 

@@ -32,7 +32,7 @@ class BaseSystem(pl.LightningModule, abc.ABC):
         return self.task
 
     def build_data_transform(self):
-        if 'data_transform' in self.model_cfg and self.model_cfg.data_transform is not None:
+        if 'data_transform' in self.config and self.config.data_transform is not None:
             return hydra.utils.instantiate(self.config.data_transform)
         else:
             return None

@@ -207,14 +207,4 @@ class CFTask(BaseTask):
             return 100. * correct / total
 
 
-    def build_model(self):
-        # get from param_data or init from cfg
-        return hydra.utils.instantiate(self.cfg.model)
-
-
-    def build_optimizer(self, net):
-        # get from param_data or init from cfg
-        return hydra.utils.instantiate(self.cfg.optimizer, net.parameters())
-
-
 

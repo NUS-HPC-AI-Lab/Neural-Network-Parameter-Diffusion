@@ -1,11 +1,10 @@
-name: encoder
+name: vae
 
 model:
   arch:
-    _target_: core.module.modules.odvae.small
+    _target_: core.module.modules.odvae.medium
     in_dim: 2048
-    input_noise_factor: 0.001
-    latent_noise_factor: [0, 0.5]
+    latent_dim: 12
     kld_weight: 0.005
 
   data_transform:
@@ -25,11 +24,12 @@ train:
   trainer:
     _target_:  pytorch_lightning.trainer.Trainer
     strategy: 'auto'
-    max_epochs: 3000
+    max_epochs: 30000
     check_val_every_n_epoch:
-    val_check_interval : 500
+    val_check_interval : 3000
     log_every_n_steps: 1
     limit_val_batches: 1
+    limit_test_batches: 1
     devices:
     - ${device.id}
 
@@ -37,18 +37,25 @@ train:
 
     callbacks:
     - _target_: pytorch_lightning.callbacks.ModelCheckpoint
-      dirpath: ${output_dir}/${system.name}/checkpoints
+      dirpath: ${output_dir}/${system.name}/${now:%Y-%m-%d-%H-%M-%S}/checkpoints
       filename: "{epoch}-{loss:.4f}"
       monitor: 'loss'
       mode: 'min'
-      save_top_k: 3
-
-      save_weights_only: true
+      save_top_k: 2
       save_last: true
+      verbose: true
+
+    - _target_: pytorch_lightning.callbacks.ModelCheckpoint
+      dirpath: ${output_dir}/${system.name}/${now:%Y-%m-%d-%H-%M-%S}/checkpoints
+      filename: "{epoch}-{ae_acc:.4f}"
+      monitor: 'vae_acc'
+      mode: 'max'
+      save_top_k: 2
+      save_last: false
       verbose: true
 
     logger:
       _target_:  pytorch_lightning.loggers.TensorBoardLogger
-      save_dir: ${output_dir}/${system.name}/tensorboards/${now:%Y-%m-%d-%H-%M-%S}
+      save_dir: ${output_dir}/${system.name}/${now:%Y-%m-%d-%H-%M-%S}/tensorboard
       name: '.'
       version: '.'

@@ -1,6 +1,7 @@
 ## Adopted from https://github.com/rosinality/denoising-diffusion-pytorch with some minor changes.
 
 import math
+import pdb
 import random
 
 import torch
@@ -16,7 +17,7 @@ class ODEncoder(nn.Module):
         self.kernel_size = kernel_size
 
         # insert the first layer
-        channel_list = [1] + channel_list
+        channel_list = [channel_list[0]] + channel_list
         self.channel_list = channel_list
         encoder = nn.ModuleList()
         layer_num = len(channel_list) - 1
@@ -157,7 +158,7 @@ class ODEncoder2Decoder(nn.Module):
             assert len(noise_factor) == 2
             noise_factor = random.uniform(noise_factor[0], noise_factor[1])
 
-        return torch.randn_like(x) * noise_factor + (1 - noise_factor) * x
+        return torch.randn_like(x) * noise_factor + x * (1 - noise_factor)
 
     def forward(self, x, **kwargs):
         x = self.add_noise(x, self.input_noise_factor)

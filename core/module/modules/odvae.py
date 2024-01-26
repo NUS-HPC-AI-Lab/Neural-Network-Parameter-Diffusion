@@ -1,3 +1,5 @@
+import pdb
+
 import torch
 
 from .encoder import ODEncoder2Decoder
@@ -12,102 +14,17 @@ import random
 import torch
 from torch import nn
 import torch.nn.functional as F
+from .encoder import ODEncoder, ODDecoder
 
-# one dimension convolutional encoder
-class ODEncoder(nn.Module):
-    def __init__(self, in_dim_list, fold_rate, kernel_size, channel_list):
-        super(ODEncoder, self).__init__()
-        self.in_dim_list = in_dim_list
-        self.fold_rate = fold_rate
-        self.kernel_size = kernel_size
-
-        # insert the first layer
-        channel_list = [1] + channel_list
-        self.channel_list = channel_list
-        encoder = nn.ModuleList()
-        layer_num = len(channel_list) - 1
-
-        for i in range(layer_num):
-            if_last = False
-            if_start = i == 0
-            if i == layer_num - 1:
-                if_last = True
-            layer = self.build_layer(in_dim_list[0], kernel_size, fold_rate,
-                                     channel_list[i], channel_list[i+1], if_last, if_start)
-            encoder.append(layer)
-        self.encoder = encoder
-
-
-    def build_layer(self, in_dim, kernel_size, fold_rate, input_channel, output_channel, last=False, if_start=False):
-        # first: if is the first layer of encoder
-        layer = nn.Sequential(
-            nn.LeakyReLU() if not if_start else nn.Identity(),
-            nn.InstanceNorm1d(in_dim),
-            nn.Conv1d(input_channel if not if_start else 1, input_channel, kernel_size, stride=1, padding=1),
-            nn.LeakyReLU(),
-            nn.InstanceNorm1d(in_dim),
-            nn.Conv1d(input_channel, output_channel, kernel_size, stride=fold_rate, padding=0),
-            nn.Tanh() if last else nn.Identity(),
-        )
-        return layer
-
-
-    def forward(self, x, **kwargs):
-        for i, module in enumerate(self.encoder):
-            x = module(x)
-        return x
-
-
-class ODDecoder(nn.Module):
-    def __init__(self, in_dim_list, fold_rate, kernel_size, channel_list):
-        super(ODDecoder, self).__init__()
-        self.in_dim_list = in_dim_list
-        self.fold_rate = fold_rate
-        self.kernel_size = kernel_size
-
-        # insert the first layer
-        channel_list = channel_list + [1]
-        self.channel_list = channel_list
-        decoder = nn.ModuleList()
-        layer_num = len(channel_list) - 1
-
-        for i in range(layer_num):
-            if_last = False
-            if i == layer_num - 1:
-                if_last = True
-            layer = self.build_layer(in_dim_list[0], kernel_size, fold_rate, channel_list[i], channel_list[i + 1],
-                                     if_last)
-            decoder.append(layer)
-        self.decoder = decoder
-
-
-    def build_layer(self, in_dim, kernel_size, fold_rate, input_channel, output_channel, last):
-        layer = nn.Sequential(
-            nn.LeakyReLU(),
-            nn.InstanceNorm1d(in_dim),
-            nn.ConvTranspose1d(input_channel, input_channel, kernel_size, stride=fold_rate, padding=0),
-            nn.LeakyReLU(),
-            nn.InstanceNorm1d(in_dim),
-            nn.Conv1d(input_channel, output_channel, kernel_size, stride=1, padding=fold_rate if last else fold_rate - 1)
-        )
-        return layer
-
-    def forward(self, x, **kwargs):
-        for i, module in enumerate(self.decoder):
-            x = module(x)
-        return x
 
 class ODVAE(nn.Module):
-    def __init__(self, in_dim, kld_weight=0.5, kernel_size=3, fold_rate=3,
-                 input_noise_factor=0.001, latent_noise_factor=0.1,
+    def __init__(self, in_dim, latent_dim, kld_weight=0.5, kernel_size=3, fold_rate=3,
                  enc_channel_list=None, dec_channel_list=None):
         super(ODVAE, self).__init__()
         self.in_dim = in_dim
         self.fold_rate = fold_rate
         self.kernel_size = kernel_size
         self.kld_weight = kld_weight
-        self.input_noise_factor = input_noise_factor
-        self.latent_noise_factor = latent_noise_factor
         # default augment for debug
         if enc_channel_list is None:
             enc_channel_list = [2, 2, 2, 2]
@@ -139,8 +56,8 @@ class ODVAE(nn.Module):
         self.encoder = ODEncoder(enc_dim_list, fold_rate, kernel_size, enc_channel_list)
         self.decoder = ODDecoder(dec_dim_list, fold_rate, kernel_size, dec_channel_list)
 
-        self.fc_mu =  nn.Linear(dec_dim_list[0], dec_dim_list[0])
-        self.fc_var = nn.Linear(dec_dim_list[0], dec_dim_list[0])
+        self.fc_mu =  nn.Linear(latent_dim, latent_dim)
+        self.fc_var = nn.Linear(latent_dim, latent_dim)
 
     def encode(self, x, **kwargs):
         x = self.adjust_input(x)
@@ -181,16 +98,19 @@ class ODVAE(nn.Module):
 
         return torch.randn_like(x) * noise_factor + (1 - noise_factor) * x
 
-    def forward(self, x, **kwargs):
-        x = self.encode(x)
-        mu = self.fc_mu(x)
-        log_var = self.fc_var(x)
+    def forward(self, input, **kwargs):
+        x = self.encode(input)
+        x_flatten = x.view(x.size(0), -1)
+        mu = self.fc_mu(x_flatten)
+        log_var = self.fc_var(x_flatten)
         z = self.reparameterize(mu, log_var)
+        z = z.view(x.shape)
+        z = torch.clamp(z, -1, 1)
         output = self.decode(z)
 
         # calculate loss
         recons = output
-        recons_loss = F.mse_loss(recons, x)
+        recons_loss = F.mse_loss(recons, input)
 
         kld_loss = torch.mean(-0.5 * torch.sum(1 + log_var - mu ** 2 - log_var.exp(), dim=1), dim=0)
 
@@ -198,27 +118,27 @@ class ODVAE(nn.Module):
         return {'loss': loss, 'Reconstruction_Loss': recons_loss.detach(), 'KLD': -kld_loss.detach()}
 
     def sample(self, num_samples):
-        z = torch.randn(num_samples, self.dec_channel_list[0], self.dec_dim_list[0])
+        z = torch.randn(num_samples, self.dec_channel_list[0], self.dec_dim_list[0]).cuda()
         samples = self.decode(z)
         return samples
 
 
 class small(ODVAE):
-    def __init__(self, in_dim, kld_weight, input_noise_factor, latent_noise_factor):
+    def __init__(self, in_dim, latent_dim, kld_weight):
         fold_rate = 3
         kernel_size = 3
         enc_channel_list = [2, 2, 2, 2]
         dec_channel_list = [2, 64, 64, 8]
-        super(small, self).__init__(in_dim, kld_weight, kernel_size, fold_rate, input_noise_factor, latent_noise_factor, enc_channel_list, dec_channel_list)
+        super(small, self).__init__(in_dim, latent_dim, kld_weight, kernel_size, fold_rate, enc_channel_list, dec_channel_list)
 
 class medium(ODVAE):
-    def __init__(self, in_dim, kld_weight, input_noise_factor, latent_noise_factor):
+    def __init__(self, in_dim, latent_dim, kld_weight):
         fold_rate = 5
         kernel_size = 5
         enc_channel_list = [4, 4, 4, 4]
         dec_channel_list = [4, 256, 256, 8]
-        super(medium, self).__init__(in_dim, kld_weight, kernel_size, fold_rate, input_noise_factor, latent_noise_factor, enc_channel_list, dec_channel_list)
+        super(medium, self).__init__(in_dim, latent_dim, kld_weight, kernel_size, fold_rate, enc_channel_list, dec_channel_list)
 
 
 if __name__ == '__main__':
-    model = small(2048, 0.1, 0.1)
+    model = small(2048, 0.005)

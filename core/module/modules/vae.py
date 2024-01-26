@@ -50,9 +50,9 @@ class VanillaVAE(BaseVAE):
         for h_dim in hidden_dims:
             modules.append(
                 nn.Sequential(
-                    nn.Conv2d(in_channels, out_channels=h_dim,
+                    nn.Conv1d(in_channels, out_channels=h_dim,
                               kernel_size= 3, stride= 2, padding  = 1),
-                    nn.BatchNorm2d(h_dim),
+                    nn.BatchNorm1d(h_dim),
                     nn.LeakyReLU())
             )
             in_channels = h_dim
@@ -72,13 +72,13 @@ class VanillaVAE(BaseVAE):
         for i in range(len(hidden_dims) - 1):
             modules.append(
                 nn.Sequential(
-                    nn.ConvTranspose2d(hidden_dims[i],
+                    nn.ConvTranspose1d(hidden_dims[i],
                                        hidden_dims[i + 1],
                                        kernel_size=3,
                                        stride = 2,
                                        padding=1,
                                        output_padding=1),
-                    nn.BatchNorm2d(hidden_dims[i + 1]),
+                    nn.BatchNorm1d(hidden_dims[i + 1]),
                     nn.LeakyReLU())
             )
 
@@ -87,15 +87,15 @@ class VanillaVAE(BaseVAE):
         self.decoder = nn.Sequential(*modules)
 
         self.final_layer = nn.Sequential(
-                            nn.ConvTranspose2d(hidden_dims[-1],
+                            nn.ConvTranspose1d(hidden_dims[-1],
                                                hidden_dims[-1],
                                                kernel_size=3,
                                                stride=2,
                                                padding=1,
                                                output_padding=1),
-                            nn.BatchNorm2d(hidden_dims[-1]),
+                            nn.BatchNorm1d(hidden_dims[-1]),
                             nn.LeakyReLU(),
-                            nn.Conv2d(hidden_dims[-1], out_channels= 3,
+                            nn.Conv1d(hidden_dims[-1], out_channels= 3,
                                       kernel_size= 3, padding= 1),
                             nn.Tanh())
 

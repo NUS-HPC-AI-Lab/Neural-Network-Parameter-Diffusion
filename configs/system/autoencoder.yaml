@@ -2,13 +2,13 @@ name: encoder
 
 model:
   arch:
-#     _target_: core.module.modules.encoder.small
-#     in_dim: 2048
-#     input_noise_factor: 0.001
-#     latent_noise_factor: [0, 1.0]
-
-    _target_: core.module.modules.autoencoder.Latent_AE_cnn_small
+    _target_: core.module.modules.encoder.small
     in_dim: 2048
+    input_noise_factor: 0.001
+    latent_noise_factor: [0, 1.0]
+
+#     _target_: core.module.modules.autoencoder.Latent_AE_cnn_small
+#     in_dim: 2048
 
   data_transform:
 

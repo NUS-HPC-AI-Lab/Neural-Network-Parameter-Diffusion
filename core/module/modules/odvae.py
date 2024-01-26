@@ -1,3 +1,9 @@
+import torch
+
+from .encoder import ODEncoder2Decoder
+from torch import Tensor
+import torch.nn as nn
+
 ## Adopted from https://github.com/rosinality/denoising-diffusion-pytorch with some minor changes.
 
 import math
@@ -91,12 +97,15 @@ class ODDecoder(nn.Module):
             x = module(x)
         return x
 
-class ODEncoder2Decoder(nn.Module):
-    def __init__(self, in_dim, kernel_size=3, fold_rate=3, input_noise_factor=0.001, latent_noise_factor=0.1, enc_channel_list=None, dec_channel_list=None):
-        super(ODEncoder2Decoder, self).__init__()
+class ODVAE(nn.Module):
+    def __init__(self, in_dim, kld_weight=0.5, kernel_size=3, fold_rate=3,
+                 input_noise_factor=0.001, latent_noise_factor=0.1,
+                 enc_channel_list=None, dec_channel_list=None):
+        super(ODVAE, self).__init__()
         self.in_dim = in_dim
         self.fold_rate = fold_rate
         self.kernel_size = kernel_size
+        self.kld_weight = kld_weight
         self.input_noise_factor = input_noise_factor
         self.latent_noise_factor = latent_noise_factor
         # default augment for debug
@@ -121,9 +130,17 @@ class ODEncoder2Decoder(nn.Module):
             dim = real_input_dim // fold_rate ** (4 - i)
             dec_dim_list.append(dim)
 
+        self.enc_dim_list = enc_dim_list
+        self.dec_dim_list = dec_dim_list
+        self.enc_channel_list =  enc_channel_list
+        self.dec_channel_list =  dec_channel_list
+
         self.real_input_dim = real_input_dim
         self.encoder = ODEncoder(enc_dim_list, fold_rate, kernel_size, enc_channel_list)
         self.decoder = ODDecoder(dec_dim_list, fold_rate, kernel_size, dec_channel_list)
+
+        self.fc_mu =  nn.Linear(dec_dim_list[0], dec_dim_list[0])
+        self.fc_var = nn.Linear(dec_dim_list[0], dec_dim_list[0])
 
     def encode(self, x, **kwargs):
         x = self.adjust_input(x)
@@ -152,6 +169,11 @@ class ODEncoder2Decoder(nn.Module):
         )
         return input
 
+    def reparameterize(self, mu, logvar):
+        std = torch.exp(0.5*logvar)
+        eps = torch.randn_like(std)
+        return mu + eps*std
+
     def add_noise(self, x, noise_factor):
         if not isinstance(noise_factor, float):
             assert len(noise_factor) == 2
@@ -160,29 +182,42 @@ class ODEncoder2Decoder(nn.Module):
         return torch.randn_like(x) * noise_factor + (1 - noise_factor) * x
 
     def forward(self, x, **kwargs):
-        x = self.add_noise(x, self.input_noise_factor)
         x = self.encode(x)
-        x = self.add_noise(x, self.latent_noise_factor)
-        x = torch.clamp(x, -1, 1)
-        x = self.decode(x)
-        return x
+        mu = self.fc_mu(x)
+        log_var = self.fc_var(x)
+        z = self.reparameterize(mu, log_var)
+        output = self.decode(z)
+
+        # calculate loss
+        recons = output
+        recons_loss = F.mse_loss(recons, x)
+
+        kld_loss = torch.mean(-0.5 * torch.sum(1 + log_var - mu ** 2 - log_var.exp(), dim=1), dim=0)
+
+        loss = recons_loss + self.kld_weight * kld_loss
+        return {'loss': loss, 'Reconstruction_Loss': recons_loss.detach(), 'KLD': -kld_loss.detach()}
+
+    def sample(self, num_samples):
+        z = torch.randn(num_samples, self.dec_channel_list[0], self.dec_dim_list[0])
+        samples = self.decode(z)
+        return samples
 
 
-class small(ODEncoder2Decoder):
-    def __init__(self, in_dim, input_noise_factor, latent_noise_factor):
+class small(ODVAE):
+    def __init__(self, in_dim, kld_weight, input_noise_factor, latent_noise_factor):
         fold_rate = 3
         kernel_size = 3
         enc_channel_list = [2, 2, 2, 2]
         dec_channel_list = [2, 64, 64, 8]
-        super(small, self).__init__(in_dim, kernel_size, fold_rate, input_noise_factor, latent_noise_factor, enc_channel_list, dec_channel_list)
+        super(small, self).__init__(in_dim, kld_weight, kernel_size, fold_rate, input_noise_factor, latent_noise_factor, enc_channel_list, dec_channel_list)
 
-class medium(ODEncoder2Decoder):
-    def __init__(self, in_dim, input_noise_factor, latent_noise_factor):
+class medium(ODVAE):
+    def __init__(self, in_dim, kld_weight, input_noise_factor, latent_noise_factor):
         fold_rate = 5
         kernel_size = 5
         enc_channel_list = [4, 4, 4, 4]
         dec_channel_list = [4, 256, 256, 8]
-        super(medium, self).__init__(in_dim, kernel_size, fold_rate, input_noise_factor, latent_noise_factor, enc_channel_list, dec_channel_list)
+        super(medium, self).__init__(in_dim, kld_weight, kernel_size, fold_rate, input_noise_factor, latent_noise_factor, enc_channel_list, dec_channel_list)
 
 
 if __name__ == '__main__':

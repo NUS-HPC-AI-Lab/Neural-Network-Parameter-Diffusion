@@ -9,27 +9,27 @@ from typing import Optional, Union, List, Dict, Any, Sequence
 from omegaconf import DictConfig, OmegaConf
 from pytorch_lightning.callbacks import ModelCheckpoint
 import types
+from core.tasks import tasks
 
-class BaseSystem(abc.ABC, pl.LightningModule):
-    def __init__(self, cfg, task, **kwargs):
+class BaseSystem(pl.LightningModule, abc.ABC):
+    def __init__(self, cfg):
         super(BaseSystem, self).__init__()
-        self.save_hyperparameters()
-        self.task = task
         # when save  hyperparameters, the self.task will be ignored
-        self.config = cfg
+        task_cfg =  cfg.task
         self.automatic_optimization = False
-        self.train_cfg = cfg.train
-        self.model_cfg = cfg.model
+        self.config = cfg.system
+        self.train_cfg = self.config.train
+        self.model_cfg = self.config.model
         self.model = self.build_model()
         self.loss_func = self.build_loss_func()
         self.data_transform = self.build_data_transform()
-        pass
+        self.build_task(task_cfg)
 
-    # def set_task(self, task):
-    #     self.task = task
-    #
-    # def get_task(self):
-    #     return self.task
+    def build_task(self, task_cfg, **kwargs):
+        self.task = tasks[task_cfg.name](task_cfg)
+
+    def get_task(self):
+        return self.task
 
     def build_data_transform(self):
         if 'data_transform' in self.model_cfg and self.model_cfg.data_transform is not None:
@@ -39,32 +39,23 @@ class BaseSystem(abc.ABC, pl.LightningModule):
 
     def build_trainer(self):
         trainer = hydra.utils.instantiate(self.train_cfg.trainer)
+        pdb.set_trace()
         return trainer
 
     def task_func(self, input):
         return self.task.test_g_model(input)
 
-    @staticmethod
-    def system_training(system, datamodule, **kwargs):
-        trainer = system.build_trainer()
-        pdb.set_trace()
-        trainer.fit(system, datamodule=datamodule)
-        print("best model starting saving")
-
-    # @staticmethod
-    # def system_testing(system, **kwargs):
-    #     trainer = system.build_trainer()
-    #     data_module = system.get_task().get_param_data()
-    #     trainer.test(system, datamodule=data_module)
-
     def training_step(self, batch, batch_idx, **kwargs):
+        optimizer = self.optimizers()
         loss = self.forward(batch, **kwargs)
-        self.optimizer.zero_grad()
+        optimizer.zero_grad()
         self.manual_backward(loss)
-        self.optimizer.step()
+        optimizer.step()
 
         if hasattr(self, 'lr_scheduler'):
             self.lr_scheduler.step()
+
+        return {'loss': loss}
 
     def build_model(self, **kwargs):
         model = hydra.utils.instantiate(self.model_cfg.arch)
@@ -93,4 +84,4 @@ class BaseSystem(abc.ABC, pl.LightningModule):
 
     @abc.abstractmethod
     def forward(self, x, **kwargs):
-        raise
+        raise NotImplementedError

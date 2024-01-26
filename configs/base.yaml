@@ -11,9 +11,7 @@ device:
 seed: 42
 process_title: wangkai
 
-output_dir: outputs/debug/
-
-
+output_dir: /home/kwang/zhouyukun/outputs/nndiff/debug/
 
 hydra:
   output_subdir: config

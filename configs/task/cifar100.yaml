@@ -31,5 +31,5 @@ train_layer: ['layer4.1.bn1.weight', 'layer4.1.bn1.bias', 'layer4.1.bn2.bias', '
 # parameter data root
 param:
   data_root: /home/kwang/zhouyukun/Neural_Network_Diffusion/param_data/2024-01-24_10-51-51/data.pt
-  k: 20
+  k: 200
   num_workers: 4

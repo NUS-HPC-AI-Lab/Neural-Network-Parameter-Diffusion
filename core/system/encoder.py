@@ -4,17 +4,20 @@ import torch
 from .base import BaseSystem
 import torch.nn as nn
 import pytorch_lightning as pl
+import pdb
+
 
 
 class EncoderSystem(BaseSystem):
-    def __init__(self, config, task_func, **kwargs):
-        super(EncoderSystem, self).__init__(config, task_func)
+    def __init__(self, config, **kwargs):
+        super(EncoderSystem, self).__init__(config)
+        print("EncoderSystem init")
 
     def forward(self, batch, **kwargs):
         output = self.model(batch)
         loss = self.loss_func(batch, output, **kwargs)
         # self.log('epoch', self.current_epoch)
-        self.log('loss', loss.cpu().detach().mean().item())
+        self.log('loss', loss.cpu().detach().mean().item(), on_epoch=True, prog_bar=True, logger=True)
         return loss
 
     def validation_step(self, batch, batch_idx, **kwargs):

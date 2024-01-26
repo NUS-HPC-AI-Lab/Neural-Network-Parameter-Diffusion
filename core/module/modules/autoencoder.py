@@ -142,7 +142,7 @@ class Latent_AE_cnn_small(nn.Module):
 
         return emb_dec4.reshape(input_shape)
 
-    def Enc(self, input):
+    def encode(self, input):
         if len(input.size()) == 2:
             input = input.view(input.size(0), 1, -1)
 
@@ -160,7 +160,7 @@ class Latent_AE_cnn_small(nn.Module):
 
         return emb_enc4
 
-    def Dec(self, emb_enc4):
+    def decode(self, emb_enc4):
         emb_dec1 = self.dec1(emb_enc4)
         emb_dec2 = self.dec2(emb_dec1)
         emb_dec3 = self.dec3(emb_dec2)

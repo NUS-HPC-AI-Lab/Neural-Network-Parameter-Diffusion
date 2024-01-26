@@ -8,70 +8,71 @@ from core.tasks.classification import CFTask
 from core.system import *
 import torch
 import torch.distributed as dist
+from core.tasks import tasks
+import time
 
-tasks = {
-    'classification': CFTask,
-}
+from pytorch_lightning import Trainer, LightningModule, LightningDataModule
+from pytorch_lightning.callbacks import ModelCheckpoint, StochasticWeightAveraging
+from pytorch_lightning.loggers import TensorBoardLogger
+from pytorch_lightning.strategies import DDPStrategy
 
-system = {
-    'encoder': EncoderSystem,
-    'ddpm': DDPM,
-}
+def set_seed(seed):
+    pl.seed_everything(seed)
 
-class Runner(object):
-    def __init__(self, cfg, **kwargs):
-        self.cfg = cfg
+def set_device(device_config):
+    # set the global cuda device
+    os.environ["CUDA_VISIBLE_DEVICES"] = str(device_config.cuda_visible_devices)
+    torch.cuda.set_device(device_config.cuda)
+    torch.set_float32_matmul_precision('medium')
+    # warnings.filterwarnings("always")
 
-        for k, v in kwargs.items():
-            print(k, v)
 
-        # set seed
-        self.set_seed(cfg.seed)
-        # set device
-        self.set_device(cfg.device)
+def set_processtitle(cfg):
+    # set process title
+    import setproctitle
+    setproctitle.setproctitle(cfg.process_title)
 
-        # set process title
-        self.set_processtitle()
+def init_experiment(cfg, **kwargs):
+    cfg = cfg
 
-    def set_processtitle(self):
-        # set process title
-        import setproctitle
-        setproctitle.setproctitle(self.cfg.process_title)
+    print("config:")
+    for k, v in cfg.items():
+        print(k, v)
+    print("=" * 20)
 
-    def train_generation(self, **kwargs):
-        cfg = self.cfg
-        # build task
-        task_cls = tasks[cfg.task.name]
-        self.task = task_cls(cfg.task, **kwargs)
-        task = self.task
+    print("kwargs:")
+    for k, v in kwargs.items():
+        print(k, v)
+    print("=" * 20)
 
-        # build system
-        self.system_cls = system[cfg.system.name]
-        self.system = self.system_cls(cfg.system, task, **kwargs)
+    # set seed
+    set_seed(cfg.seed)
+    # set device
+    set_device(cfg.device)
 
-        # running
-        self.output_dir = cfg.output_dir
-        datamodule = self.task.get_param_data()
-        self.system_cls.system_training(self.system, datamodule)
+    # set process title
+    set_processtitle(cfg)
 
-        return {}
 
-    def train_task_for_data(self, **kwargs):
-        task_cls = tasks[self.cfg.task.name]
-        self.task = task_cls(self.cfg.task, **kwargs)
+def train_generation(cfg):
+    init_experiment(cfg)
+    system_cls = systems[cfg.system.name]
+    system = system_cls(cfg)
+    datamodule = system.get_task().get_param_data()
+    # running
 
-        task_result = self.task.train_for_data()
-        return task_result
+    cwd = os.path.join(cfg.output_dir, cfg.system.name, time.strftime("%Y-%m-%d-%H-%M-%S", time.localtime()))
+    trainer: Trainer = hydra.utils.instantiate(cfg.system.train.trainer)
+    trainer.fit(system, datamodule=datamodule)
 
-    def set_seed(self, seed):
-        pl.seed_everything(seed)
+    return {}
 
-    def set_device(self, device_config):
-        # set the global cuda device
-        os.environ["CUDA_VISIBLE_DEVICES"] = str(device_config.cuda_visible_devices)
-        torch.cuda.set_device(device_config.cuda)
-        torch.set_float32_matmul_precision('medium')
-        # warnings.filterwarnings("always")
+def train_task_for_data(cfg, **kwargs):
+    init_experiment(cfg, **kwargs)
+    task_cls = tasks[cfg.task.name]
+    task = task_cls(cfg.task, **kwargs)
 
+    task_result = task.train_for_data()
+    return task_result
 
 

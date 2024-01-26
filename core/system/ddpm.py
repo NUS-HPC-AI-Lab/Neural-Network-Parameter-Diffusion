@@ -10,8 +10,8 @@ from core.utils.ddpm import *
 from core.utils.utils import *
 
 class DDPM(BaseSystem):
-    def __init__(self, config, task, **kwargs):
-        super(DDPM, self).__init__(config, task)
+    def __init__(self, config, **kwargs):
+        super(DDPM, self).__init__(config)
         betas = self.train_cfg.betas
         betas = make_beta_schedule(**betas)
         self.n_timestep = betas.n_timestep

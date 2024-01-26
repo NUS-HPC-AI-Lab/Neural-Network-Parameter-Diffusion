@@ -15,7 +15,7 @@ model:
   data_transform:
     system_cls:
       _target_: core.system.encoder.EncoderSystem
-    checkpoint_path:
+    checkpoint_path: ${output_dir}/autoencoder/checkpoints/last.ckpt
 
 train:
   optimizer:
@@ -26,7 +26,7 @@ train:
   lr_scheduler:
 
   trainer:
-    _target_:  pytorch_lightning.trainer.Trainer
+    _target_: pytorch_lightning.Trainer
     _convert_: all
     max_epochs: 10000
     check_val_every_n_epoch: 500

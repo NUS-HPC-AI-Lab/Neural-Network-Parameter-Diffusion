@@ -2,10 +2,13 @@ name: encoder
 
 model:
   arch:
-    _target_: core.module.modules.encoder.small
+#     _target_: core.module.modules.encoder.small
+#     in_dim: 2048
+#     input_noise_factor: 0.001
+#     latent_noise_factor: [0, 1.0]
+
+    _target_: core.module.modules.autoencoder.Latent_AE_cnn_small
     in_dim: 2048
-    input_noise_factor: 0.001
-    latent_noise_factor: [0, 1.0]
 
   data_transform:
 
@@ -21,14 +24,26 @@ train:
     _target_: torch.nn.MSELoss
     reduction: sum
 
+#   trainer:
+#     _target_: pytorch_lightning.Trainer
+#     _convert_: all
+#     max_epochs: 30000
+#     check_val_every_n_epoch:
+#     log_every_n_steps: 10
+#     val_check_interval : 3000
+#     accelerator: gpu
+#     devices:
+#     - ${device.id}
+#     limit_val_batches: 1
+
   trainer:
     _target_:  pytorch_lightning.trainer.Trainer
+    strategy: 'auto'
     max_epochs: 3000
     check_val_every_n_epoch:
     val_check_interval : 500
     log_every_n_steps: 1
     limit_val_batches: 1
-    limit_test_batches: 1
     devices:
     - ${device.id}
 
@@ -36,8 +51,8 @@ train:
 
     callbacks:
     - _target_: pytorch_lightning.callbacks.ModelCheckpoint
-      dirpath: ${output_dir}/autoencoder
-      filename: 'encoder-{epoch}-{loss:.4f}'
+      dirpath: ${output_dir}/${system.name}/checkpoints
+      filename: "{epoch}-{loss:.4f}"
       monitor: 'loss'
       mode: 'min'
       save_top_k: 3
@@ -48,6 +63,6 @@ train:
 
     logger:
       _target_:  pytorch_lightning.loggers.TensorBoardLogger
-      save_dir: ${output_dir}/autoencoder/tensorboards/${now:%Y-%m-%d-%H-%M-%S}
+      save_dir: ${output_dir}/${system.name}/tensorboards/${now:%Y-%m-%d-%H-%M-%S}
       name: '.'
       version: '.'

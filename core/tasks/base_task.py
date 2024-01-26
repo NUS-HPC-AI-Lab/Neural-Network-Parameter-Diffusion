@@ -1,6 +1,6 @@
 import abc
 
-class BaseTask(abc.ABC):
+class BaseTask():
     def __init__(self, config, **kwargs):
         self.cfg = config
         self.task_data = self.init_task_data()

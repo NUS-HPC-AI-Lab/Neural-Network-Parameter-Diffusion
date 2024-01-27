@@ -8,14 +8,38 @@ from torchvision.models.detection import fasterrcnn_resnet50_fpn_v2, FasterRCNN_
 from torchvision.utils import draw_bounding_boxes
 from torchvision.transforms.functional import to_pil_image
 
+import datetime
+import os
+import pdb
+import time
+import object_detection.presets
+import torch
+import torch.utils.data
+import torchvision
+import torchvision.models.detection
+import torchvision.models.detection.mask_rcnn
+import object_detection.utils
+from object_detection.coco_utils import get_coco
+from object_detection.engine import evaluate, train_one_epoch
+from object_detection.group_by_aspect_ratio import create_aspect_ratio_groups, GroupedBatchSampler
+from torchvision.transforms import InterpolationMode
+from object_detection.transforms import SimpleCopyPaste
+from object_detection.train import *
+
 
 # object detection task
 class ODTask(BaseTask):
-    def __init__(self, config, **kwargs):
-        super(ODTask, self).__init__(config, **kwargs)
-        self.train_loader = self.task_data.train_dataloader()
-        self.eval_loader = self.task_data.val_dataloader()
-        self.test_loader = self.task_data.test_dataloader()
+    def __init__(self, config, **kwconfig):
+        super(ODTask, self).__init__(config, **kwconfig)
+        if self.cfg.backend.lower() == "tv_tensor" and not self.cfg.use_v2:
+            raise ValueError("Use --use-v2 if you want to use the tv_tensor backend.")
+        if self.cfg.dataset not in ("coco", "coco_kp"):
+            raise ValueError(f"Dataset should be coco or coco_kp, got {config.dataset}")
+        if "keypoint" in config.model and self.cfg.dataset != "coco_kp":
+            raise ValueError("Oops, if you want Keypoint detection, set --dataset coco_kp")
+        if self.cfg.dataset == "coco_kp" and self.cfg.use_v2:
+            raise ValueError("KeyPoint detection doesn't support V2 transforms yet")
+
 
     def build_model(self):
         if self.cfg.model == 'faster_rcnn_v1':
@@ -28,8 +52,20 @@ class ODTask(BaseTask):
             raise NotImplementedError
         return model
 
+
     def init_task_data(self):
-        return
+        dataset, num_classes = get_dataset(is_train=True, args=self.cfg.data)
+        dataset_test, _ = get_dataset(is_train=False, args=self.cfg.data)
+
+        train_collate_fn = utils.collate_fn
+
+        self.data_loader = torch.utils.data.DataLoader(
+            dataset, num_workers=args.workers, collate_fn=train_collate_fn
+        )
+
+        self.data_loader_test = torch.utils.data.DataLoader(
+            dataset_test, batch_size=1, num_workers=args.workers, collate_fn=utils.collate_fn
+        )
 
     def set_param_data(self):
         pass
@@ -38,10 +74,4 @@ class ODTask(BaseTask):
         pass
 
     def train_for_data(self):
-        pass
-
-    def train(self):
-        pass
-
-    def test(self):
         pass

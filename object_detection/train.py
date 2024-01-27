@@ -19,6 +19,7 @@ the number of epochs should be adapted so that we have the same number of iterat
 """
 import datetime
 import os
+import pdb
 import time
 
 import presets
@@ -304,6 +305,7 @@ def main(args):
     print("Start training")
     start_time = time.time()
     for epoch in range(args.start_epoch, args.epochs):
+        pdb.set_trace()
         if args.distributed:
             train_sampler.set_epoch(epoch)
         train_one_epoch(model, optimizer, data_loader, device, epoch, args.print_freq, scaler)

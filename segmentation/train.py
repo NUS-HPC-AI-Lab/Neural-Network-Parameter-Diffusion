@@ -1,5 +1,6 @@
 import datetime
 import os
+import pdb
 import time
 import warnings
 
@@ -231,6 +232,7 @@ def main(args):
             args.start_epoch = checkpoint["epoch"] + 1
             if args.amp:
                 scaler.load_state_dict(checkpoint["scaler"])
+    pdb.set_trace()
 
     if args.test_only:
         # We disable the cudnn benchmarking because it can noticeably affect the accuracy

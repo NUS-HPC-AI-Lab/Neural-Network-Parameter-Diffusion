@@ -302,6 +302,10 @@ def main(args):
         evaluate(model, data_loader_test, device=device)
         return
 
+    from engine import plot_demo
+    plot_demo(model, data_loader_test, device=device, save_dir='/home/kwang/zhouyukun/outputs/nndiff/od')
+    return
+
     print("Start training")
     start_time = time.time()
     for epoch in range(args.start_epoch, args.epochs):
@@ -325,6 +329,7 @@ def main(args):
 
         # evaluate after every epoch
         evaluate(model, data_loader_test, device=device)
+
 
     total_time = time.time() - start_time
     total_time_str = str(datetime.timedelta(seconds=int(total_time)))

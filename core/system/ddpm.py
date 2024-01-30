@@ -1,3 +1,5 @@
+import pdb
+
 import hydra.utils
 import pytorch_lightning as pl
 import torch
@@ -8,25 +10,28 @@ import torch.nn as nn
 from .base import BaseSystem
 from core.utils.ddpm import *
 from core.utils.utils import *
+from core.module.prelayer.latent_transformer import Param2Latent
+from .encoder import EncoderSystem
 
 class DDPM(BaseSystem):
     def __init__(self, config, **kwargs):
         super(DDPM, self).__init__(config)
-        betas = self.train_cfg.betas
-        betas = make_beta_schedule(**betas)
+        self.save_hyperparameters()
+        betas = self.config.beta_schedule
         self.n_timestep = betas.n_timestep
+        betas = make_beta_schedule(**betas)
         self.betas_register(betas)
 
     def betas_register(self, betas):
-        model_mean_type = self.train_cfg.model_mean_type
-        model_var_type = self.train_cfg.model_var_type
+        model_mean_type = self.config.model_mean_type
+        model_var_type = self.config.model_var_type
         betas = betas.type(torch.float64)
         timesteps = betas.shape[0]
         self.num_timesteps = int(timesteps)
 
         self.model_mean_type = model_mean_type  # xprev, xstart, eps
         self.model_var_type = model_var_type  # learned, fixedsmall, fixedlarge
-        self.loss_type = self.train_cfg.loss_type  # kl, mse
+        self.loss_type = self.config.loss_type  # kl, mse
 
         alphas = 1 - betas
         alphas_cumprod = torch.cumprod(alphas, 0)
@@ -83,12 +88,12 @@ class DDPM(BaseSystem):
         return {'samples': samples}
 
     def pre_process(self, batch):
-        if hasattr(self, 'data_transform') or self.data_transform is not None:
+        if hasattr(self, 'data_transform') and self.data_transform is not None:
             batch = self.data_transform.pre_process(batch)
         return batch
 
     def post_process(self, outputs):
-        if hasattr(self, 'data_transform') or self.data_transform is not None:
+        if hasattr(self, 'data_transform') and self.data_transform is not None:
             outputs = self.data_transform.post_process(outputs)
         return outputs
 
@@ -101,14 +106,37 @@ class DDPM(BaseSystem):
         accs = []
         for i in range(params.shape[0]):
             param = params[i]
-            acc = self.task.test(param)
+            acc, test_loss, output_list = self.task_func(param)
             accs.append(acc)
         best_acc = np.max(accs)
         print("generated models accuracy:", accs)
         print("generated models mean accuracy:", np.mean(accs))
         print("generated models best accuracy:", best_acc)
         self.log('best_g_acc', best_acc)
-        return {'best_g_acc': best_acc}
+        self.log('mean_g_acc', np.mean(accs).item())
+        return {'best_g_acc': best_acc, 'mean_g_acc': np.mean(accs).item()}
+
+    def test_step(self, batch, batch_idx, **kwargs: Any):
+        # generate 100 models
+        batch = self.pre_process(batch)
+        outputs = self.generate(batch, 100)
+        params = self.post_process(outputs)
+        accs = []
+        for i in range(params.shape[0]):
+            param = params[i]
+            acc, test_loss, output_list = self.task_func(param)
+            if acc < 50:
+                continue
+            accs.append(acc)
+        best_acc = np.max(accs)
+        print("generated models accuracy:", accs)
+        print("generated models mean accuracy:", np.mean(accs))
+        print("generated models best accuracy:", best_acc)
+        print("generated models median accuracy:", np.median(accs))
+        self.log('best_g_acc', best_acc)
+        self.log('mean_g_acc', np.mean(accs).item())
+        self.log('med_g_acc', np.median(accs).item())
+        return {'best_g_acc': best_acc, 'mean_g_acc': np.mean(accs).item(), 'med_g_acc': np.median(accs).item()}
 
     def forward(self, batch, **kwargs):
         batch = self.pre_process(batch)
@@ -288,7 +316,7 @@ class DDPM(BaseSystem):
 
     # def p_sample(self, model, x, t, noise_fn, clip_denoised=True, return_pred_x0=False, lab=None):
     def p_sample(self, model, x, t, noise_fn, clip_denoised=True, return_pred_x0=False):
-
+        # pdb.set_trace()
         mean, _, log_var, pred_x0 = self.p_mean_variance(model, x, t, clip_denoised, return_pred_x0=True)
 
         noise                     = noise_fn(x.shape, dtype=x.dtype).to(x.device)

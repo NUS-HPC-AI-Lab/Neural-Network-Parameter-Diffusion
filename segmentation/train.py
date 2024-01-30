@@ -77,6 +77,7 @@ def evaluate(model, data_loader, device, num_classes):
             output = model(image)
             output = output["out"]
 
+            pdb.set_trace()
             confmat.update(target.flatten(), output.argmax(1).flatten())
             # FIXME need to take into account that the datasets
             # could have been padded in distributed setup
@@ -99,6 +100,50 @@ def evaluate(model, data_loader, device, num_classes):
         )
 
     return confmat
+
+
+import matplotlib.pyplot as plt
+import cv2
+import numpy as np
+import os
+from pycocotools import mask as maskUtils
+from pycocotools.coco import COCO
+from skimage import io
+# def apply_mask(image, segmentation):
+
+
+
+@torch.inference_mode()
+def plot_demo(model, data_loader, device, num_classes):
+    json_path = '/home/kwang/big_space/datasets/coco/annotations/instances_val2017.json'
+    coco = COCO(json_path)
+
+    catIds = coco.getCatIds(catNms=['str'])  # 获取指定类别 id
+
+    train_path = '/home/kwang/big_space/datasets/coco/val2017/'
+
+    imgIds = coco.getImgIds(catIds=catIds)  # 获取图片i
+
+    for num_image in range(100):
+        img = coco.loadImgs(imgIds[num_image - 1])[0]  # 加载图片,loadImgs() 返回的是只有一个内嵌字典元素的list, 使用[0]来访问这个元素
+        image = io.imread(train_path + img['file_name'])
+
+
+
+        annIds = coco.getAnnIds(imgIds=img['id'], catIds=catIds, iscrowd=None)
+        anns = coco.loadAnns(annIds)
+
+        # 读取在线图片的方法
+        # I = io.imread(img['coco_url'])
+
+        plt.imshow(image)
+        coco.showAnns(anns)
+        plt.axis('off')
+        plt.show()
+
+        plt.savefig('/home/kwang/zhouyukun/outputs/nndiff/seg/{}.pdf'.format(num_image), bbox_inches='tight', pad_inches=0)
+
+        plt.close()
 
 
 def train_one_epoch(model, criterion, optimizer, data_loader, lr_scheduler, device, epoch, print_freq, scaler=None):
@@ -232,7 +277,6 @@ def main(args):
             args.start_epoch = checkpoint["epoch"] + 1
             if args.amp:
                 scaler.load_state_dict(checkpoint["scaler"])
-    pdb.set_trace()
 
     if args.test_only:
         # We disable the cudnn benchmarking because it can noticeably affect the accuracy
@@ -241,6 +285,9 @@ def main(args):
         confmat = evaluate(model, data_loader_test, device=device, num_classes=num_classes)
         print(confmat)
         return
+
+    plot_demo(model, data_loader_test, device=device, num_classes=num_classes)
+    return
 
     start_time = time.time()
     for epoch in range(args.start_epoch, args.epochs):

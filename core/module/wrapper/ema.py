@@ -6,5 +6,11 @@ from copy import deepcopy
 
 class EMA():
     def __init__(self, model):
-        self.model = model
+        self.model = model.cuda()
         self.ema = deepcopy(model)
+
+    def parameters(self):
+        return self.model.parameters()
+
+    def __call__(self, *args, **kwargs):
+        return self.model(*args, **kwargs)

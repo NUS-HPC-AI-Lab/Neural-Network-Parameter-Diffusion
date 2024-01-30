@@ -60,6 +60,8 @@ def train_generation(cfg):
     init_experiment(cfg)
     system_cls = systems[cfg.system.name]
     system = system_cls(cfg)
+    if cfg.load_system_checkpoint is not None:
+        system = system_cls.load_from_checkpoint(cfg.load_system_checkpoint, config=cfg)
     datamodule = system.get_task().get_param_data()
     # running
     trainer: Trainer = hydra.utils.instantiate(cfg.system.train.trainer)

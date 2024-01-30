@@ -45,7 +45,7 @@ train:
 
     callbacks:
     - _target_: pytorch_lightning.callbacks.ModelCheckpoint
-      dirpath: ${output_dir}/${system.name}/${now:%Y-%m-%d-%H-%M-%S}/checkpoints
+#       dirpath: ${output_dir}/${system.name}/checkpoints
       filename: "{epoch}-{loss:.4f}"
       monitor: 'loss'
       mode: 'min'
@@ -54,7 +54,7 @@ train:
       verbose: true
 
     - _target_: pytorch_lightning.callbacks.ModelCheckpoint
-      dirpath: ${output_dir}/${system.name}/${now:%Y-%m-%d-%H-%M-%S}/checkpoints
+#       dirpath: ${output_dir}/${system.name}/checkpoints
       filename: "{epoch}-{ae_acc:.4f}"
       monitor: 'ae_acc'
       mode: 'max'
@@ -64,6 +64,6 @@ train:
 
     logger:
       _target_:  pytorch_lightning.loggers.TensorBoardLogger
-      save_dir: ${output_dir}/${system.name}/${now:%Y-%m-%d-%H-%M-%S}/tensorboard
+      save_dir: ${output_dir}/${system.name}/
       name: '.'
       version: '.'

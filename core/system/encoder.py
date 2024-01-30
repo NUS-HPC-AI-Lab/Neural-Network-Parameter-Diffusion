@@ -12,6 +12,7 @@ class EncoderSystem(BaseSystem):
     def __init__(self, config, **kwargs):
         super(EncoderSystem, self).__init__(config)
         print("EncoderSystem init")
+        self.save_hyperparameters()
 
     def forward(self, batch, **kwargs):
         output = self.model(batch)

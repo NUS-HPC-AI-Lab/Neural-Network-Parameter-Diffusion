@@ -13,9 +13,19 @@ model:
 #       in_dim: 52
 
 data_transform:
-  system_cls:
-    _target_: core.system.encoder.EncoderSystem
-  checkpoint_path: ${output_dir}/autoencoder/checkpoints/last.ckpt
+  system_cls: core.system.encoder.EncoderSystem
+  checkpoint_path: ${output_dir}/encoder/checkpoints/last.ckpt
+#   checkpoint_path: /home/kwang/zhouyukun/outputs/nndiff/noise_ablation/baseline/encoder/checkpoints/epoch=20999-ae_acc=75.3000.ckpt
+
+beta_schedule:
+  start: 1e-4
+  end: 2e-2
+  schedule: linear
+  n_timestep: 1000
+
+model_mean_type: eps
+model_var_type: fixedlarge
+loss_type: mse
 
 train:
   optimizer:
@@ -40,16 +50,16 @@ train:
     enable_model_summary: false
 
     callbacks:
-      - _target_: core.module.pl.callbacks.modelCheckpoint
+      - _target_: pytorch_lightning.callbacks.ModelCheckpoint
         monitor: 'best_g_acc'
         mode: 'max'
         save_top_k: 3
         save_last: true
-        filename: 'ddpm_{epoch}-{best_g_acc:.4f}_{mean_g_acc:.4f}'
+        filename: 'ddpm_{epoch}-{best_g_acc:.4f}'
 
 
     logger:
-      _target_: core.module.pl.callbacks.tensorBoardLogger
-      save_dir: ${output_dir}
+      _target_: pytorch_lightning.loggers.TensorBoardLogger
+      save_dir: ${output_dir}/${system.name}/
       name: 'tensorboard'
 

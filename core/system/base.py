@@ -15,6 +15,7 @@ class BaseSystem(pl.LightningModule, abc.ABC):
     def __init__(self, cfg):
         super(BaseSystem, self).__init__()
         # when save  hyperparameters, the self.task will be ignored
+        self.save_hyperparameters()
         task_cfg =  cfg.task
         self.automatic_optimization = False
         self.config = cfg.system

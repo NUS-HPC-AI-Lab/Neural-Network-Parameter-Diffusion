@@ -27,7 +27,7 @@ class ODEncoder(nn.Module):
             if_start = i == 0
             if i == layer_num - 1:
                 if_last = True
-            layer = self.build_layer(in_dim_list[0], kernel_size, fold_rate,
+            layer = self.build_layer(in_dim_list[i], kernel_size, fold_rate,
                                      channel_list[i], channel_list[i+1], if_last, if_start)
             encoder.append(layer)
         self.encoder = encoder
@@ -70,7 +70,7 @@ class ODDecoder(nn.Module):
             if_last = False
             if i == layer_num - 1:
                 if_last = True
-            layer = self.build_layer(in_dim_list[0], kernel_size, fold_rate, channel_list[i], channel_list[i + 1],
+            layer = self.build_layer(in_dim_list[i], kernel_size, fold_rate, channel_list[i], channel_list[i + 1],
                                      if_last)
             decoder.append(layer)
         self.decoder = decoder

@@ -102,10 +102,11 @@ class DDPM(BaseSystem):
         outputs = self.generate(batch, 10)
 
         params = self.post_process(outputs)
+        params = params.cpu()
 
         accs = []
         for i in range(params.shape[0]):
-            param = params[i]
+            param = params[i].to(batch.device)
             acc, test_loss, output_list = self.task_func(param)
             accs.append(acc)
         best_acc = np.max(accs)
@@ -125,8 +126,6 @@ class DDPM(BaseSystem):
         for i in range(params.shape[0]):
             param = params[i]
             acc, test_loss, output_list = self.task_func(param)
-            if acc < 50:
-                continue
             accs.append(acc)
         best_acc = np.max(accs)
         print("generated models accuracy:", accs)

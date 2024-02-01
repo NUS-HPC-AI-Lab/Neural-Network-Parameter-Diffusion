@@ -1,3 +1,5 @@
+import pdb
+
 import hydra.utils
 
 from .base_task import  BaseTask
@@ -51,6 +53,43 @@ class CFTask(BaseTask):
 
         with torch.no_grad():
             for data, target in self.test_loader:
+                data, target = data.cuda(), target.cuda()
+                output = model(data)
+                target = target.to(torch.int64)
+                test_loss += F.cross_entropy(output, target, size_average=False).item()  # sum up batch loss
+
+                total += data.shape[0]
+                pred = torch.max(output, 1)[1]
+                output_list += pred.cpu().numpy().tolist()
+                correct += pred.eq(target.view_as(pred)).sum().item()
+
+        test_loss /= total
+        acc = 100. * correct / total
+        del model
+        return acc, test_loss, output_list
+
+    def val_g_model(self, input):
+        net = self.model
+        train_layer = self.train_layer
+        param = input
+        target_num = 0
+        for name, module in net.named_parameters():
+            if name in train_layer:
+                target_num += torch.numel(module)
+        params_num = torch.squeeze(param).shape[0]  # + 30720
+        assert (target_num == params_num)
+        param = torch.squeeze(param)
+        model = partial_reverse_tomodel(param, net, train_layer).to(param.device)
+
+        model.eval()
+        test_loss = 0
+        correct = 0
+        total = 0
+
+        output_list = []
+
+        with torch.no_grad():
+            for data, target in self.train_loader:
                 data, target = data.cuda(), target.cuda()
                 output = model(data)
                 target = target.to(torch.int64)

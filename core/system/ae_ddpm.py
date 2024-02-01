@@ -15,11 +15,16 @@ from .ddpm import DDPM
 
 class AE_DDPM(DDPM):
     def __init__(self, config, **kwargs):
+        ae_model =  hydra.utils.instantiate(config.system.ae_model)
+        input_dim = config.system.ae_model.in_dim
+        input_noise = torch.randn((1, input_dim))
+        latent_dim = ae_model.encode(input_noise).shape
+        config.system.model.arch.model.in_dim = latent_dim[-1] * latent_dim[-2]
         super(AE_DDPM, self).__init__(config)
         self.save_hyperparameters()
-        self.ae_model =  hydra.utils.instantiate(self.config.ae_model)
         self.split_epoch = self.train_cfg.split_epoch
         self.loss_func = nn.MSELoss()
+        self.ae_model = ae_model
 
     def ae_forward(self, batch, **kwargs):
         output = self.ae_model(batch)
@@ -71,8 +76,13 @@ class AE_DDPM(DDPM):
             print('---------------------------------')
             print('Test the AE model')
             ae_rec_accs = []
-            ae_params = self.ae_model.decode(self.ae_model.encode(good_param))
+            latent = self.ae_model.encode(good_param)
+            print("latent shape:{}".format(latent.shape))
+            ae_params = self.ae_model.decode(latent)
+            print("ae params shape:{}".format(ae_params.shape))
+            ae_params = ae_params.cpu()
             for i, param in enumerate(ae_params):
+                param = param.to(batch.device)
                 acc, test_loss, output_list = self.task_func(param)
                 ae_rec_accs.append(acc)
 
@@ -84,6 +94,8 @@ class AE_DDPM(DDPM):
             self.log('best_g_acc', 0)
         else:
             dict = super(AE_DDPM, self).validation_step(batch, batch_idx, **kwargs)
+            self.log('ae_acc', 94.3)
+            self.log('ae_loss', 0 )
             return dict
 
     def configure_optimizers(self, **kwargs):

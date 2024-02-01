@@ -23,6 +23,7 @@ def set_seed(seed):
 
 def set_device(device_config):
     # set the global cuda device
+    torch.backends.cudnn.enabled = True
     os.environ["CUDA_VISIBLE_DEVICES"] = str(device_config.cuda_visible_devices)
     torch.cuda.set_device(device_config.cuda)
     torch.set_float32_matmul_precision('medium')
@@ -60,12 +61,10 @@ def train_generation(cfg):
     init_experiment(cfg)
     system_cls = systems[cfg.system.name]
     system = system_cls(cfg)
-    if cfg.load_system_checkpoint is not None:
-        system = system_cls.load_from_checkpoint(cfg.load_system_checkpoint, config=cfg)
     datamodule = system.get_task().get_param_data()
     # running
     trainer: Trainer = hydra.utils.instantiate(cfg.system.train.trainer)
-    trainer.fit(system, datamodule=datamodule)
+    trainer.fit(system, datamodule=datamodule, ckpt_path=cfg.load_system_checkpoint)
     trainer.test(system, datamodule=datamodule)
 
     return {}
@@ -73,11 +72,11 @@ def train_generation(cfg):
 def test_generation(cfg):
     init_experiment(cfg)
     system_cls = systems[cfg.system.name]
-    system = system_cls.load_from_checkpoint(cfg.load_system_checkpoint, config=cfg)
+    system = system_cls(cfg)
     datamodule = system.get_task().get_param_data()
     # running
     trainer: Trainer = hydra.utils.instantiate(cfg.system.train.trainer)
-    trainer.test(system, datamodule=datamodule)
+    trainer.test(system, datamodule=datamodule, ckpt_path=cfg.load_system_checkpoint)
 
     return {}
 

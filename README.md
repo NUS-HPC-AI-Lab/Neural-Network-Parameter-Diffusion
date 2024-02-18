@@ -36,7 +36,7 @@ git clone https://github.com/NUS-HPC-AI-Lab/Neural-Network-Diffusion.git
 
 ```
 conda env create -f environment.yaml
-conda activate mmcomp
+conda activate pdiff
 ```
 
 or install necessary package by:

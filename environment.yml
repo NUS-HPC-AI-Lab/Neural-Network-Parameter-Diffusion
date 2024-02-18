@@ -1,4 +1,4 @@
-name: mmcomp
+name: pdiff
 channels:
   - https://mirrors.tuna.tsinghua.edu.cn/anaconda/cloud/conda-forge
   - https://mirrors.tuna.tsinghua.edu.cn/anaconda/pkgs/pro/
@@ -239,4 +239,3 @@ dependencies:
       - widgetsnbextension==4.0.9
       - yarl==1.9.3
       - zipp==3.17.0
-prefix: /home/kwang/miniconda3/envs/mmcomp

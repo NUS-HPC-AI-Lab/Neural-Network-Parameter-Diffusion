@@ -1,7 +1,7 @@
 name: classification
 
 data:
-  data_root: /home/kwang/zhouyukun/data/cifar100
+  data_root: data/cifar100
   dataset: cifar100
   batch_size: 64
   num_workers: 1
@@ -30,6 +30,6 @@ train_layer: ['layer4.1.bn1.weight', 'layer4.1.bn1.bias', 'layer4.1.bn2.bias', '
 
 # parameter data root
 param:
-  data_root: /home/kwang/zhouyukun/Neural_Network_Diffusion/param_data/2024-01-26_14-18-59/data.pt
+  data_root: param_data/cifar100/data.pt
   k: 200
   num_workers: 4

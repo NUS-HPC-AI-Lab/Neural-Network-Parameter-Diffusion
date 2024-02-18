@@ -15,7 +15,6 @@ model:
 data_transform:
   system_cls: core.system.encoder.EncoderSystem
   checkpoint_path: ${output_dir}/encoder/checkpoints/last.ckpt
-#   checkpoint_path: /home/kwang/zhouyukun/outputs/nndiff/noise_ablation/baseline/encoder/checkpoints/epoch=20999-ae_acc=75.3000.ckpt
 
 beta_schedule:
   start: 1e-4

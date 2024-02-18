@@ -12,9 +12,9 @@ load_system_checkpoint:
 mode: train
 
 seed: 42
-process_title: wangkai
+process_title: p-diff
 
-output_dir: /home/kwang/zhouyukun/outputs/nndiff/debug/
+output_dir: outputs/cifar100
 
 hydra:
   output_subdir: config

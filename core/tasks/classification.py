@@ -127,7 +127,7 @@ class CFTask(BaseTask):
 
         tmp_path = os.path.join(data_path, 'tmp_{}'.format(datetime.datetime.now().strftime('%Y-%m-%d_%H-%M-%S')))
         # tmp_path = os.path.join(data_path, 'tmp')
-        final_path = os.path.join(data_path, datetime.datetime.now().strftime('%Y-%m-%d_%H-%M-%S'))
+        final_path = os.path.join(data_path, self.cfg.data.dataset)
 
         os.makedirs(tmp_path, exist_ok=True)
         os.makedirs(final_path, exist_ok=True)

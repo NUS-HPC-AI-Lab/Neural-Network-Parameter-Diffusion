@@ -1,6 +1,6 @@
 # Neural Network Diffusion
 
-### [Neural Network Diffusion commit soon] | [Project Page](https://1zeryu.github.io/Neural-Network-Diffusion/)
+### [Paper, coming soon](https://github.com/NUS-HPC-AI-Lab/Neural-Network-Diffusion) | [Project Page](https://1zeryu.github.io/Neural-Network-Diffusion/)
 
 ![Motivation of p-diff](figs/motivation_v3.gif)
 

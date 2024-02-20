@@ -9,7 +9,7 @@ This repository contains the code and implementation details for the research pa
 
 ## Authors
 
-- [Kai Wang](https://kaiwang960112.github.io/)<sup>1</sup>, [Zhaopan Xu](https://scholar.google.com.hk/citations?user=qNWDwOcAAAAJ&hl=zh-CN)<sup>1</sup>, [Zhuang Liu*](https://liuzhuang13.github.io/)<sup>2</sup>, Yukun Zhou, [Zelin Zang](https://scholar.google.com/citations?user=foERjnQAAAAJ&hl=zh-CN)<sup>1</sup>, [Trevor Darrell](https://people.eecs.berkeley.edu/~trevor/)<sup>3</sup>, and [Yang You*](https://www.comp.nus.edu.sg/~youy/)<sup>1</sup>(* equal advising)
+- [Kai Wang](https://kaiwang960112.github.io/)<sup>1</sup>, [Zhaopan Xu](https://scholar.google.com.hk/citations?user=qNWDwOcAAAAJ&hl=zh-CN)<sup>1</sup>,  Yukun Zhou, [Zelin Zang](https://scholar.google.com/citations?user=foERjnQAAAAJ&hl=zh-CN)<sup>1</sup>, [Trevor Darrell](https://people.eecs.berkeley.edu/~trevor/)<sup>3</sup>, [Zhuang Liu*](https://liuzhuang13.github.io/)<sup>2</sup>, and [Yang You*](https://www.comp.nus.edu.sg/~youy/)<sup>1</sup>(* equal advising)
 - <sup>1</sup>[National University of Singapore](https://www.nus.edu.sg/), <sup>2</sup>[Meta AI](https://www.meta.com/), and <sup>3</sup>[University of California, Berkeley](https://www.berkeley.edu/)
 
 

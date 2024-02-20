@@ -1,6 +1,6 @@
 # Neural Network Diffusion
 
-### [Paper](xxxxxxx) | [Project Page](xxxxxx)
+### [Neural Network Diffusion commit soon] | [Project Page](https://1zeryu.github.io/Neural-Network-Diffusion/)
 
 ![Motivation of p-diff](figs/motivation_v3.gif)
 

@@ -92,13 +92,13 @@ python train_p_diff.py task.param.k=xxx
 If you found our work useful, please consider citing us.
 
 ```
-@article{wang2024neural,
+@misc{wang2024neural,
       title={Neural Network Diffusion}, 
-      author={Kai Wang, Zhaopan Xu, Zhuang Liu, Yukun Zhou, Zelin Zang, Trevor Darrell and Yang You},
+      author={Kai Wang and Zhaopan Xu and Yukun Zhou and Zelin Zang and Trevor Darrell and Zhuang Liu and Yang You},
       year={2024},
-      eprint={2401.xxxx},
+      eprint={2402.13144},
       archivePrefix={arXiv},
-      primaryClass={cs.CV}
+      primaryClass={cs.LG}
 }
 ```
 ## Acknowledgments

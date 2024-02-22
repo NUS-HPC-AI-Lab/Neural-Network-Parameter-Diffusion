@@ -5,7 +5,7 @@ defaults:
 
 device:
   cuda_visible_devices:  "0,1,2,3,4,5,6"
-  id: 1
+  id: 0
   cuda: cuda:${device.id}
 
 load_system_checkpoint:

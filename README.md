@@ -35,7 +35,7 @@ git clone https://github.com/NUS-HPC-AI-Lab/Neural-Network-Diffusion.git
 2. Create a new Conda environment and activate it: 
 
 ```
-conda env create -f environment.yaml
+conda env create -f environment.yml
 conda activate pdiff
 ```
 

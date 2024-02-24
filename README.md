@@ -42,7 +42,7 @@ conda activate pdiff
 or install necessary package by:
 
 ```
-pip install -r requirement.txt
+pip install -r requirements.txt
 ```
 
 ### **Baseline**

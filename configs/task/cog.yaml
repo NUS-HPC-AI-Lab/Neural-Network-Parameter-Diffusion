@@ -1,0 +1,35 @@
+name: cognitive
+
+data:
+  data_root: data/cognitive # replace with the path to the cognitive dataset
+  dataset: cognitive # replace with the name of the cognitive dataset
+  batch_size: 64
+  num_workers: 1
+
+# model for data
+model:
+  _target_: models.resnet.ResNet18 # replace with the target model
+  num_classes: 100 # replace
+
+# optimizer for training task model
+optimizer:
+  _target_: torch.optim.SGD
+  lr: 0.1
+  momentum: 0.9
+  weight_decay: 0.0005
+
+# lr scheduler for training task optimizer
+lr_scheduler:
+  _target_: torch.optim.lr_scheduler.MultiStepLR
+  milestones: [60, 120, 160, 200]
+  gamma: 0.2
+
+epoch: 200
+save_num_model: 200
+train_layer: ['layer4.1.bn1.weight', 'layer4.1.bn1.bias', 'layer4.1.bn2.bias', 'layer4.1.bn2.weight'] #replace
+
+# parameter data root
+param:
+  data_root: param_data/cifar100/data.pt # replace
+  k: 200
+  num_workers: 4

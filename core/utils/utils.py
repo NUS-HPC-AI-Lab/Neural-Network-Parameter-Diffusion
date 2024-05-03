@@ -173,3 +173,8 @@ def test_ensem_partial(self, best_params,dataloader,fea_path=None):
     acc = test_generated_partial(self, mean,dataloader,fea_path=fea_path)
     del best_params
     return acc
+
+import re
+def extract_epoch(filename):
+    match = re.search(r'epoch_(\d+)', filename)
+    return int(match.group(1)) if match else None

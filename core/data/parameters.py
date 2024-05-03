@@ -62,7 +62,7 @@ class Parameters(VisionDataset):
         if split  == 'train':
             self.data = batch[:k]
         else:
-            self.data = batch[:k]
+            self.data = batch[k:]
         # data is a tensor list which is the parameters of the model
 
     def __getitem__(self, item):

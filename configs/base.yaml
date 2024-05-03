@@ -1,6 +1,6 @@
 defaults:
-  - task: cifar100
-  - system: autoencoder
+  - task: cognitive
+  - system: ddpm
   - _self_
 
 device:
@@ -14,7 +14,7 @@ mode: train
 seed: 42
 process_title: p-diff
 
-output_dir: outputs/cifar100
+output_dir: outputs/cognitive
 
 hydra:
   output_subdir: config

@@ -1,0 +1,44 @@
+name: cognitive
+
+data:
+  data_root: data/cognitive 
+  dataset: cognitive 
+  batch_size: 32
+  num_workers: 1
+  task: 'dm1'
+  act_dim: 17
+  seq_len: 20
+
+# model for data
+model:
+  _target_: models.rnn.RNNNet
+  hidden_size: 32
+
+
+# optimizer for training task model
+optimizer:
+  _target_: torch.optim.SGD
+  lr: 0.001
+
+
+# lr scheduler for training task optimizer
+# lr_scheduler:
+#   _target_: torch.optim.lr_scheduler.MultiStepLR
+#   milestones: [60, 120, 160, 200]
+#   gamma: 0.2
+
+epoch: 35000
+save_num_model: 300
+train_layer: 'all'
+
+# parameter data root
+param:
+  data_root: param_data/cifar100/data.pt # replace
+  ckpt_path: '/om2/user/annhuang/20CogTasks/dm1/models'
+  perf_path: '/om2/user/annhuang/20CogTasks/dm1/logs'
+  ckpt_name: 'hidden_32_seed_*_epoch_*.pt'
+  final_path: '/om2/user/annhuang/NND/'
+  k: 300
+  num_workers: 4
+  seeds: [0,1,2,3,4,5,6,7,8,9]
+
